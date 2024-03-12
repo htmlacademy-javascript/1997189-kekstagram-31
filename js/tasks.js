@@ -15,5 +15,3 @@
 // function dividedBy(n) {return function(v) {return v / n}}
 
 // console.log(nine(dividedBy(three())));
-
-

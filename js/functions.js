@@ -21,12 +21,12 @@
 
 function getParametrOfMeeting (startOfWorkingDay, endOfWorkingDay, meetingStartTime, durationOfMeeting) {
   const arrFromData = [[...startOfWorkingDay.split(':')], [...endOfWorkingDay.split(':')], [...meetingStartTime.split(':')]];
-  const newArr = arrFromData.map((item) => Number(item[0]) * 60 + Number(item[1]));
-  [startOfWorkingDay, endOfWorkingDay, meetingStartTime] = newArr;
-  return (startOfWorkingDay <= meetingStartTime) && (meetingStartTime + durationOfMeeting <= endOfWorkingDay);
+  const timeInMinutes = arrFromData.map((item) => Number(item[0]) * 60 + Number(item[1]));
+  const [startOfWorkingDayInMinutes, endOfWorkingDayInMinutes, meetingStartTimeInMinutes] = timeInMinutes;
+  return (startOfWorkingDayInMinutes <= meetingStartTimeInMinutes) && (meetingStartTimeInMinutes + durationOfMeeting <= endOfWorkingDayInMinutes);
 }
 
-getParametrOfMeeting ('14:00', '17:30', '08:0', 90);
+getParametrOfMeeting ('8:0', '10:0', '8:0', 120);
 
 //getParametrOfMeeting ('14:00', '17:30', '08:0', 90);
 
