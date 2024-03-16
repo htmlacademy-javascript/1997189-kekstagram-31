@@ -30,4 +30,8 @@ const createUniqueId = (min,max) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-export {getRandomInteger, generateCountOfPhotos, getRandomArrayElement, createUniqueId};
+//Проверка ESCAPE, экспортируем в ?main.js
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+
+export {getRandomInteger, generateCountOfPhotos, getRandomArrayElement, createUniqueId, isEscapeKey};
