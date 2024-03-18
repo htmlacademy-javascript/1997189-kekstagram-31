@@ -14,13 +14,21 @@
 // Отрисуйте сгенерированные DOM-элементы в блок .pictures. Для вставки элементов используйте DocumentFragment.
 
 // Подключите модуль в проект.
-
+import { openModal } from './modal.js';
 const cardTemplate = document.querySelector('#picture').content.querySelector('.picture');//шаблон фотографий других пользователей
 const container = document.querySelector('.pictures');// контайнер, куда будем грузить фото других пользователей
+const localData = [];
+
+const setData = (photos) => {
+  localData.length = 0;
+  localData.push(...photos);
+  console.log(localData);
+};
 
 const renderPhotos = (data) => {
+  setData(data);
   const fragment = document.createDocumentFragment();
-  data.forEach(({id, url, description, likes, comments }) => {
+  data.forEach(({ id, url, description, likes, comments }) => {
     const card = cardTemplate.cloneNode(true);//Клонированный шаблон
     card.dataset.pictureId = id;//добавила дата атрибут id на ссылку, внутри кот. миниатюра, чтобы привязать большую фото к показу;
     card.querySelector('.picture__img').src = url;//url фотографии берем из данных
@@ -33,4 +41,15 @@ const renderPhotos = (data) => {
   container.appendChild(fragment);
 };
 
+
+container.addEventListener('click', (evt) => {
+  const currentPicture = evt.target.closest('.picture');
+  //console.log(currentPicture.dataset.pictureId);
+
+  if (currentPicture) {
+    const currentPhoto = localData.find((photo) => Number(photo.id) === Number(currentPicture.dataset.pictureId)); //нашла фото, которое кликают
+    //console.log(localData);
+    openModal(currentPhoto);//передаю из thumbnailsContainer.addEventListener в openModal(currentPicture.dataset.pictureId);
+  }
+});
 export { renderPhotos };
