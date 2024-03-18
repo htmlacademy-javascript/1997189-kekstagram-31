@@ -1,4 +1,5 @@
 import {isEscapeKey} from './utils.js';
+import {renderComments} from './render-comments.js';
 
 const modalElement = document.querySelector('.big-picture');//модальное окно
 //крестик закрытия мод окна большое фото
@@ -34,17 +35,20 @@ const openModal = function ({url, likes, comments, description}) {
   commentsCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
   body.classList.add('modal-open');
-  const fragmentForCurrentPhoto = document.createDocumentFragment();
+  //const fragmentForCurrentPhoto = document.createDocumentFragment();
   commentsContainer.innerHTML = '';
+  //const allComments = comments;
 
-  comments.forEach(({avatar,name,message}) => {
-    const commentElementClone = commentElement.cloneNode(true);//Добавила его внутрь форич и количество комментов стало таким, каким нужно для фото, ранее, вне форича был только один коммент. СОЗДАВАТЬ КЛОН ВНУТРИ ЦИКЛА!!!
-    commentElementClone.querySelector('.social__picture').src = avatar;
-    commentElementClone.querySelector('.social__picture').alt = name;
-    commentElementClone.querySelector('.social__text').textContent = message;
-    fragmentForCurrentPhoto.appendChild(commentElementClone);
-  });
-  commentsContainer.appendChild(fragmentForCurrentPhoto);
+  renderComments(comments);
+
+  // comments.forEach(({avatar,name,message}) => {
+  //   const commentElementClone = commentElement.cloneNode(true);//Добавила его внутрь форич и количество комментов стало таким, каким нужно для фото, ранее, вне форича был только один коммент. СОЗДАВАТЬ КЛОН ВНУТРИ ЦИКЛА!!!
+  //   commentElementClone.querySelector('.social__picture').src = avatar;
+  //   commentElementClone.querySelector('.social__picture').alt = name;
+  //   commentElementClone.querySelector('.social__text').textContent = message;
+  //   fragmentForCurrentPhoto.appendChild(commentElementClone);
+  // });
+  // commentsContainer.appendChild(fragmentForCurrentPhoto);
   document.addEventListener('keydown', onDocumentKeyDown);
 };
 
@@ -64,4 +68,4 @@ bigPictureCloseButton.addEventListener('click', (evt) => {
   closeModal();
 });
 
-export {openModal};
+export {commentElement, openModal, commentsContainer};
