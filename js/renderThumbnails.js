@@ -47,6 +47,7 @@ container.addEventListener('click', (evt) => {
   //console.log(currentPicture.dataset.pictureId);
 
   if (currentPicture) {
+    evt.preventDefault();//если убрать http://127.0.0.1:3000/# НОВАЯ СТРАНИЦА!!!
     const currentPhoto = localData.find((photo) => Number(photo.id) === Number(currentPicture.dataset.pictureId)); //нашла фото, которое кликают
     //console.log(localData);
     openModal(currentPhoto);//передаю из thumbnailsContainer.addEventListener в openModal(currentPicture.dataset.pictureId);

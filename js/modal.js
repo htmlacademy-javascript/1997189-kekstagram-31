@@ -1,5 +1,5 @@
 import {isEscapeKey} from './utils.js';
-import {renderComments} from './render-comments.js';
+import {renderComments,clearComments} from './render-comments.js';
 
 const modalElement = document.querySelector('.big-picture');//модальное окно
 //крестик закрытия мод окна большое фото
@@ -11,8 +11,9 @@ const totalСomments = modalElement.querySelector('.social__comment-total-count'
 const descriptionOfPhoto = modalElement.querySelector('.social__caption');
 const commentsContainer = modalElement.querySelector('.social__comments');//ul для вставки комментов li
 const commentElement = modalElement.querySelector('.social__comment');
-const commentsCount = modalElement.querySelector('.social__comment-count');
-const commentsLoader = modalElement.querySelector('.comments-loader');
+//const commentsCount = modalElement.querySelector('.social__comment-count');
+const commentsLoader = document.querySelector('.comments-loader');
+
 const body = document.querySelector('body');
 
 
@@ -26,20 +27,18 @@ const onDocumentKeyDown = (evt) => {
 
 const openModal = function ({url, likes, comments, description}) {
   modalElement.classList.remove('hidden');
-
+  commentsLoader.classList.remove('hidden');
   bigPictureImg.src = url;// заменяем стандартную большую фото на фото текущей "маленькой"
   likesCount.textContent = likes;
-  quantityOfVisibleComments.textContent = comments.length;
+  //quantityOfVisibleComments.textContent = comments.length;
   totalСomments.textContent = comments.length;
   descriptionOfPhoto.textContent = description;
-  commentsCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
   body.classList.add('modal-open');
-  //const fragmentForCurrentPhoto = document.createDocumentFragment();
   commentsContainer.innerHTML = '';
-  //const allComments = comments;
-
+  console.log(comments)
+  console.log(commentsContainer);
   renderComments(comments);
+
 
   // comments.forEach(({avatar,name,message}) => {
   //   const commentElementClone = commentElement.cloneNode(true);//Добавила его внутрь форич и количество комментов стало таким, каким нужно для фото, ранее, вне форича был только один коммент. СОЗДАВАТЬ КЛОН ВНУТРИ ЦИКЛА!!!
@@ -52,10 +51,12 @@ const openModal = function ({url, likes, comments, description}) {
   document.addEventListener('keydown', onDocumentKeyDown);
 };
 
-//Делаю функцию для закрытия модального окна, чтоб не повторяться
+
 const closeModal = function () {
   //body.classList.remove('modal-open'); почему если сюда добавить , не сработает при закрытии ESC
   //скрыть окно
+  //commentsContainer.innerHTML = '';
+  clearComments();
   modalElement.classList.add('hidden');
   //удалить обработчик для закрытия
   document.removeEventListener('keydown', onDocumentKeyDown);
@@ -68,4 +69,4 @@ bigPictureCloseButton.addEventListener('click', (evt) => {
   closeModal();
 });
 
-export {commentElement, openModal, commentsContainer};
+export {commentElement, openModal, commentsContainer, commentsLoader, quantityOfVisibleComments};
