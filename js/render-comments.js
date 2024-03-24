@@ -2,11 +2,27 @@ import {commentElement,commentsContainer,commentsLoader,quantityOfVisibleComment
 let comments = [];
 let currentCount = 0;
 const step = 5;
+let count = 0;
+
+// const renderLoader = () => {
+
+// }
+
+// const renderStatistic = () => {
+
+// }
+
+// const renderComments = (comment) => {
+
+// }
+
+// const renderComments = (portion) => {
+//   renderComments(comment)
+// }
 
 const renderNextComments = () => {
   const fragment = document.createDocumentFragment();
   const renderedComments = comments.slice(currentCount, currentCount + step);
- const renderedCommentLength = renderedComments.length + currentCount;
 
   renderedComments.forEach(({avatar,name,message}) => {
     const commentElementClone = commentElement.cloneNode(true);
@@ -16,21 +32,21 @@ const renderNextComments = () => {
     commentElementClone.querySelector('.social__text').textContent = message;
 
     fragment.appendChild(commentElementClone);
+    currentCount++;
   });
   commentsContainer.appendChild(fragment);
 
-  quantityOfVisibleComments.textContent = commentsContainer.childElementCount;
+  quantityOfVisibleComments.textContent = currentCount;
 
-  if (renderedCommentLength >= comments.length) {
+  if (currentCount >= comments.length) {
     commentsLoader.classList.add('hidden');
   }
-
-  currentCount += step;
 };
 
 
 const clearComments = () => {
   currentCount = 0;
+  count = 0;
   commentsContainer.innerHTML = '';
   commentsLoader.classList.remove('hidden');
   commentsLoader.removeEventListener('click', renderNextComments);
