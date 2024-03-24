@@ -24,10 +24,15 @@ const createUniqueId = (min,max) => {
       currentValue = getRandomInteger(min,max);
     }
     previousValues.push(currentValue);
+    console.log('create unique ', currentValue)
     return currentValue;
   };
 };
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-export {getRandomInteger, generateCountOfPhotos, getRandomArrayElement, createUniqueId};
+//Проверка ESCAPE, экспортируем в ?main.js
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+
+export {getRandomInteger, generateCountOfPhotos, getRandomArrayElement, createUniqueId, isEscapeKey};
