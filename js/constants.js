@@ -49,7 +49,7 @@ const sliderOptionsDefault = {
     min: 0,
     max: 100,
   }
-}; //проверить нужен ли
+};
 
 const sliderOptionsChromeSepia = {
   range: {
