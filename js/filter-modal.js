@@ -43,11 +43,12 @@ const openUploadModal = () => {
   imgUploadBtnCancel.addEventListener('click', closeUploadModal);
 };
 
+console.log(5);
 //На появление в инпуте файла, показываю модальное окно с котенком
 imgUploadInput.addEventListener('change', (evt) => {
   openUploadModal();
 
-  // //Находим файл, который подгрузился;
+  //Находим файл, который подгрузился;
   // const file = evt.target.files[0];
   // //позв читать файлы, хранящиеся на компьютере пользователя
   // const reader = new FileReader();
