@@ -7,7 +7,12 @@ const scaleInput = document.querySelector('.scale__control--value');
 
 //- 100% +
 //значение по умолчанию в процентах Нужно , если в верстке value стоит уже 100%?
-scaleInput.value = `${100}%`;
+
+//сброс scale
+const resetScale = () => {
+  scaleInput.value = `${100}%`;
+  imgUploadPreview.style.transform = 'none';
+};
 
 scaleSmallerBtn.addEventListener('click', (evt) => {
   if(parseInt(scaleInput.value,10) > 0) {
@@ -25,4 +30,4 @@ scaleBiggerBtn.addEventListener('click', (evt) => {
   }
 });
 
-export {scaleSmallerBtn};
+export {resetScale};

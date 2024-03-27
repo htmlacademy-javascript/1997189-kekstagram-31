@@ -1,6 +1,7 @@
 import {body} from './modal.js';
 import {isEscapeKey} from './utils.js';
 import{EFFECTS,getChromeStyleFilter,getSepiaStyleFilter,getMarvinStyleFilter,getPhobosStyleFilter,getHeatStyleFilter} from './constants.js';
+import {resetScale} from './scale.js';
 
 
 const imgUploadInput = document.querySelector('.img-upload__input');//красный значок инстаграмма на основном окне
@@ -16,6 +17,9 @@ const sliderContainer = document.querySelector('.effect-level__slider');//кон
 
 const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');//поле Изменения глубины эффекта, накладываемого на изображение
 
+const resetFilter = () => {
+  imgUploadPreview.style.filter = 'none';
+};
 
 //Нажатие escape
 const onDocumentKeyDown = (evt) => {
@@ -30,6 +34,8 @@ const onDocumentKeyDown = (evt) => {
 const closeUploadModal = () => {
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
+  resetScale();
+  resetFilter();
 
   document.removeEventListener('keydown', onDocumentKeyDown);
   imgUploadBtnCancel.removeEventListener('click', closeUploadModal);
@@ -63,7 +69,7 @@ const openUploadModal = () => {
 //На появление в инпуте файла, показываю модальное окно с котенком
 imgUploadInput.addEventListener('change', (evt) => {
   openUploadModal();
-  //imgUploadInput.value = '';
+  //imgUploadInput.value = '';// при выборе другой фотографии в дальнейшем
 });
 
 //дефолтное значение спрятанного инпута
@@ -81,6 +87,8 @@ effectsList.addEventListener('change', (evt) => {
       effectLevelInput.value = sliderContainer.noUiSlider.get();
       getEffectToPhoto(currentEffect,effectLevelInput.value);
     });
+  } else {
+    sliderContainer.noUiSlider.updateOptions(EFFECTS[0]);
   }
 });
 
