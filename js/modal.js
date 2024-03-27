@@ -11,7 +11,6 @@ const totalСomments = modalElement.querySelector('.social__comment-total-count'
 const descriptionOfPhoto = modalElement.querySelector('.social__caption');
 const commentsContainer = modalElement.querySelector('.social__comments');//ul для вставки комментов li
 const commentElement = modalElement.querySelector('.social__comment');
-//const commentsCount = modalElement.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 
 const body = document.querySelector('body');
@@ -38,23 +37,11 @@ const openModal = function ({url, likes, comments, description}) {
 
   renderComments(comments);
 
-
-  // comments.forEach(({avatar,name,message}) => {
-  //   const commentElementClone = commentElement.cloneNode(true);//Добавила его внутрь форич и количество комментов стало таким, каким нужно для фото, ранее, вне форича был только один коммент. СОЗДАВАТЬ КЛОН ВНУТРИ ЦИКЛА!!!
-  //   commentElementClone.querySelector('.social__picture').src = avatar;
-  //   commentElementClone.querySelector('.social__picture').alt = name;
-  //   commentElementClone.querySelector('.social__text').textContent = message;
-  //   fragmentForCurrentPhoto.appendChild(commentElementClone);
-  // });
-  // commentsContainer.appendChild(fragmentForCurrentPhoto);
   document.addEventListener('keydown', onDocumentKeyDown);
 };
 
 
 const closeModal = function () {
-  //body.classList.remove('modal-open'); почему если сюда добавить , не сработает при закрытии ESC
-  //скрыть окно
-  //commentsContainer.innerHTML = '';
   clearComments();
   modalElement.classList.add('hidden');
   //удалить обработчик для закрытия
@@ -64,6 +51,7 @@ const closeModal = function () {
 
 //Закрытие модального окна по клику на крестик
 bigPictureCloseButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
   body.classList.remove('modal-open');
   closeModal();
 });
