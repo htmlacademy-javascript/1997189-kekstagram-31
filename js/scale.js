@@ -1,6 +1,5 @@
 import{imgUploadPreview} from './filter-modal.js';
 //ПОЧЕМУ НЕ ПОДКЛЮЧАЕТСЯ ЭТОТ МОДУЛЬ, КАК ПРАВИЛЬНО ЕГО ПОДКЛЮЧИТЬ, ЕСЛИ ИЗ НЕГО НИЧЕГО НЕ НАДО ЭКСПОРТИРОВАТЬ?
-
 //уменьшение размера фотографии
 const scaleSmallerBtn = document.querySelector('.scale__control--smaller');
 const scaleBiggerBtn = document.querySelector('.scale__control--bigger');
@@ -26,5 +25,4 @@ scaleBiggerBtn.addEventListener('click', (evt) => {
   }
 });
 
-//этот экспорт не нужен в мэйн
-export{scaleInput};
+export {scaleSmallerBtn};
