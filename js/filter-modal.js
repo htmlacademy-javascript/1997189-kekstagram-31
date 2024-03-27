@@ -3,20 +3,24 @@ import {isEscapeKey} from './utils.js';
 import{EFFECTS,getChromeStyleFilter,getSepiaStyleFilter,getMarvinStyleFilter,getPhobosStyleFilter,getHeatStyleFilter} from './constants.js';
 import {resetScale} from './scale.js';
 
-
-const imgUploadInput = document.querySelector('.img-upload__input');//красный значок инстаграмма на основном окне
-const imgUploadOverlay = document.querySelector('.img-upload__overlay');//модальное окно с фильтрами
-
+//красный значок инстаграмма на основном окне
+const imgUploadInput = document.querySelector('.img-upload__input');
+//модальное окно с фильтрами
+const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 //большое фото
-const imgUploadPreview = document.querySelector('.img-upload__preview img');//большая картинка
-const imgUploadBtnCancel = document.querySelector('.img-upload__cancel');// кнопка закрытия модального окна с фильтрами
-const effectsList = document.querySelector('.effects__list');//ul,в котором радио-кнопки превью - фильтры
-const effectLevelInput = document.querySelector('.effect-level__value');//инпут слайдера под ползунком
+const imgUploadPreview = document.querySelector('.img-upload__preview img');
+// кнопка закрытия модального окна с фильтрами
+const imgUploadBtnCancel = document.querySelector('.img-upload__cancel');
+//ul,в котором радио-кнопки превью - фильтры
+const effectsList = document.querySelector('.effects__list');
+//инпут слайдера под ползунком
+const effectLevelInput = document.querySelector('.effect-level__value');
+//контейнер, в котором лежит слайдер
+const sliderContainer = document.querySelector('.effect-level__slider');
+//поле Изменения глубины эффекта, накладываемого на изображение
+const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
 
-const sliderContainer = document.querySelector('.effect-level__slider');//контейнер, в котором лежит слайдер
-
-const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');//поле Изменения глубины эффекта, накладываемого на изображение
-
+//сброс фильтра с главной картинки
 const resetFilter = () => {
   imgUploadPreview.style.filter = 'none';
 };
@@ -30,16 +34,8 @@ const onDocumentKeyDown = (evt) => {
   }
 };
 
-//Закрытие окна. Удаление обработчика escape. Удаление обработчика клика,Удаление посл класса с больш фото
-const closeUploadModal = () => {
-  imgUploadOverlay.classList.add('hidden');
-  body.classList.remove('modal-open');
-  resetScale();
-  resetFilter();
-
-  document.removeEventListener('keydown', onDocumentKeyDown);
-  imgUploadBtnCancel.removeEventListener('click', closeUploadModal);
-};
+//дефолтное значение спрятанного инпута
+effectLevelInput.value = 100;
 
 //Создала первичные настройки для слайдера
 noUiSlider.create(sliderContainer, {
@@ -56,6 +52,35 @@ noUiSlider.create(sliderContainer, {
   },
 });
 
+//Обновление настроек слайдера для каждого эффекта
+const updateSlider = (evt) => {
+  //const currentInput = evt.target.closest('.effects__item');
+  if (evt.target.checked) {
+    const currentEffect = evt.target.value;
+    sliderContainer.noUiSlider.updateOptions(EFFECTS[currentEffect]);//VALUE - CHROME
+    sliderContainer.noUiSlider.on('update',() => {
+    //запись в спрятанный инпут значение ползунка
+      effectLevelInput.value = sliderContainer.noUiSlider.get();
+      console.log(effectLevelInput.value);
+      getEffectToPhoto(currentEffect,effectLevelInput.value);
+    });
+  } else {
+    sliderContainer.noUiSlider.updateOptions(EFFECTS[0]);// Это сброс до настроек без эффектов. Он здесь нужен?
+  }
+};
+
+//Закрытие окна. Удаление обработчика escape. Удаление обработчика клика,Удаление посл класса с больш фото. удаление scale
+const closeUploadModal = () => {
+  imgUploadOverlay.classList.add('hidden');
+  body.classList.remove('modal-open');
+  resetScale();
+  resetFilter();
+  //Удаляю слушатель с ul - checkbox
+  effectsList.removeEventListener('change', updateSlider);
+  document.removeEventListener('keydown', onDocumentKeyDown);
+  imgUploadBtnCancel.removeEventListener('click', closeUploadModal);
+};
+
 //Открытие мод окна. Добавление обработчика закрытия escape. Добавл обработчика Х
 const openUploadModal = () => {
   imgUploadOverlay.classList.remove('hidden');
@@ -64,33 +89,18 @@ const openUploadModal = () => {
 
   document.addEventListener('keydown', onDocumentKeyDown);
   imgUploadBtnCancel.addEventListener('click', closeUploadModal);
+  //Ставлю слушатель на ul effects__list
+  effectsList.addEventListener('change', updateSlider);
+};
+
+const showFilterModal = (evt) => {
+  //evt.preventDefault();
+  openUploadModal();
+  //imgUploadInput.value = '';// при выборе другой фотографии в дальнейшем
 };
 
 //На появление в инпуте файла, показываю модальное окно с котенком
-imgUploadInput.addEventListener('change', (evt) => {
-  openUploadModal();
-  //imgUploadInput.value = '';// при выборе другой фотографии в дальнейшем
-});
-
-//дефолтное значение спрятанного инпута
-effectLevelInput.value = 100;
-
-
-//Ставлю слушатель на ul effects__list
-effectsList.addEventListener('change', (evt) => {
-  //const currentInput = evt.target.closest('.effects__item');
-  if (evt.target.checked) {
-    const currentEffect = evt.target.value;
-    sliderContainer.noUiSlider.updateOptions(EFFECTS[currentEffect]);//VALUE - CHROME
-    sliderContainer.noUiSlider.on('update',() => {
-    //запись в спрятанный инпут значение ползунка
-      effectLevelInput.value = sliderContainer.noUiSlider.get();
-      getEffectToPhoto(currentEffect,effectLevelInput.value);
-    });
-  } else {
-    sliderContainer.noUiSlider.updateOptions(EFFECTS[0]);
-  }
-});
+imgUploadInput.addEventListener('change',showFilterModal);
 
 function getEffectToPhoto (effect,value) {
   switch(effect){

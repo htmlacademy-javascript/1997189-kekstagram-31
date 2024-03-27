@@ -1,12 +1,11 @@
 import{imgUploadPreview} from './filter-modal.js';
-//ПОЧЕМУ НЕ ПОДКЛЮЧАЕТСЯ ЭТОТ МОДУЛЬ, КАК ПРАВИЛЬНО ЕГО ПОДКЛЮЧИТЬ, ЕСЛИ ИЗ НЕГО НИЧЕГО НЕ НАДО ЭКСПОРТИРОВАТЬ?
+
 //уменьшение размера фотографии
 const scaleSmallerBtn = document.querySelector('.scale__control--smaller');
 const scaleBiggerBtn = document.querySelector('.scale__control--bigger');
 const scaleInput = document.querySelector('.scale__control--value');
 
 //- 100% +
-//значение по умолчанию в процентах Нужно , если в верстке value стоит уже 100%?
 
 //сброс scale
 const resetScale = () => {
