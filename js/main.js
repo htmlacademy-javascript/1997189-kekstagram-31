@@ -6,3 +6,4 @@ const data = createArraysOfPhotos();
 renderPhotos(data);
 
 import {closeSliderByClick} from './effects.js';
+import { scaleInput } from './scale.js';
