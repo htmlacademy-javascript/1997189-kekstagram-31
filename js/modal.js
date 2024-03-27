@@ -35,8 +35,7 @@ const openModal = function ({url, likes, comments, description}) {
   descriptionOfPhoto.textContent = description;
   body.classList.add('modal-open');
   commentsContainer.innerHTML = '';
-  console.log(comments)
-  console.log(commentsContainer);
+
   renderComments(comments);
 
 
@@ -69,4 +68,4 @@ bigPictureCloseButton.addEventListener('click', (evt) => {
   closeModal();
 });
 
-export {commentElement, openModal, commentsContainer, commentsLoader, quantityOfVisibleComments};
+export {commentElement, openModal, commentsContainer, commentsLoader, quantityOfVisibleComments, body};

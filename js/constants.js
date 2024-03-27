@@ -41,4 +41,60 @@ const MESSAGES = [
   'Продолжайте фотографировать',
 ];
 
-export {QUANTITY_PHOTOS, MIN_LIKES, MAX_LIKES, MIN_COMMENTS, MAX_COMMENTS, QUANTITY_AVATAR, NAMES, DESCRIPTION, MESSAGES};
+const sliderOptionsDefault = {
+  start: 100,
+  step: 1,
+  connect: 'lower',
+  range: {
+    min: 0,
+    max: 100,
+  }
+}; //проверить нужен ли
+
+const sliderOptionsChromeSepia = {
+  range: {
+    min:0,
+    max:1,
+  },
+  start: 1,
+  step: 0.1,
+};
+
+const sliderOptionsPhobos = {
+  range: {
+    min:0,
+    max:3,
+  },
+  start: 3,
+  step: 0.1,
+};
+
+const sliderOptionsHeat = {
+  range: {
+    min:1,
+    max:3,
+  },
+  start: 3,
+  step: 0.1,
+};
+
+//название эффектов - настройка для effects.js
+const EFFECTS = {
+  none: sliderOptionsDefault,
+  chrome: sliderOptionsChromeSepia,
+  sepia: sliderOptionsChromeSepia,
+  marvin: sliderOptionsDefault,
+  phobos: sliderOptionsPhobos,
+  heat: sliderOptionsHeat,
+};
+console.log(EFFECTS.chrome);
+//Применение бОльшего эффекта//value из поля слайдера
+const getChromeStyleFilter = (value) => `grayscale(${value})`;
+const getSepiaStyleFilter = (value) => `sepia(${value})`;
+const getMarvinStyleFilter = (value) => `invert(${value}%)`;
+const getPhobosStyleFilter = (value) => `blur(${value}px)`;
+const getHeatStyleFilter = (value) => `brightness(${value})`;
+
+export {QUANTITY_PHOTOS, MIN_LIKES, MAX_LIKES, MIN_COMMENTS, MAX_COMMENTS, QUANTITY_AVATAR, NAMES, DESCRIPTION, MESSAGES,EFFECTS,getChromeStyleFilter,getSepiaStyleFilter,getMarvinStyleFilter,getPhobosStyleFilter,getHeatStyleFilter};
+
+
