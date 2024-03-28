@@ -47,8 +47,15 @@ noUiSlider.create(sliderContainer, {
     max: 100,
   },
   format: {
-    to: (value) => value,
-    from: (value) => parseFloat(value).toFixed(0),
+    to: function (value) {
+      if(Number.isInteger(value)) {
+        return value.toFixed(0);
+      }
+      return value.toFixed(1);
+    },
+    from:  function (value) {
+      return parseFloat(value);
+    }
   },
 });
 
@@ -56,6 +63,7 @@ noUiSlider.create(sliderContainer, {
 const updateSlider = (evt) => {
   //const currentInput = evt.target.closest('.effects__item');
   if (evt.target.checked) {
+    console.log(evt.target);
     const currentEffect = evt.target.value;
     sliderContainer.noUiSlider.updateOptions(EFFECTS[currentEffect]);//VALUE - CHROME
     sliderContainer.noUiSlider.on('update',() => {
