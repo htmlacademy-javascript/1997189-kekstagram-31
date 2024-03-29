@@ -1,11 +1,11 @@
-const QUANTITY_PHOTOS = 25;//относится к id,url
-const MIN_LIKES = 15;
-const MAX_LIKES = 200;
-const MIN_COMMENTS = 0;
-const MAX_COMMENTS = 30;
-const QUANTITY_AVATAR = 6;
+export const QUANTITY_PHOTOS = 25;//относится к id,url
+export const MIN_LIKES = 15;
+export const MAX_LIKES = 200;
+export const MIN_COMMENTS = 0;
+export const MAX_COMMENTS = 30;
+export const QUANTITY_AVATAR = 6;
 
-const NAMES = [
+export const NAMES = [
   'Илья',
   'Варвара',
   'Иван',
@@ -23,9 +23,9 @@ const NAMES = [
   'Николай',
 ];
 
-const DESCRIPTION = ['Луна','Февраль','Поле','Розовый закат','Кот','Каменистые горы'];
+export const DESCRIPTION = ['Луна','Февраль','Поле','Розовый закат','Кот','Каменистые горы'];
 
-const MESSAGES = [
+export const MESSAGES = [
   'Всё отлично!',
   'Плохо',
   'Ужас',
@@ -41,7 +41,7 @@ const MESSAGES = [
   'Продолжайте фотографировать',
 ];
 
-const sliderOptionsDefault = {
+export const sliderOptionsDefault = {
   start: 100,
   step: 1,
   connect: 'lower',
@@ -51,7 +51,7 @@ const sliderOptionsDefault = {
   }
 };
 
-const sliderOptionsChromeSepia = {
+export const sliderOptionsChromeSepia = {
   range: {
     min:0,
     max:1,
@@ -60,7 +60,7 @@ const sliderOptionsChromeSepia = {
   step: 0.1,
 };
 
-const sliderOptionsPhobos = {
+export const sliderOptionsPhobos = {
   range: {
     min:0,
     max:3,
@@ -69,7 +69,7 @@ const sliderOptionsPhobos = {
   step: 0.1,
 };
 
-const sliderOptionsHeat = {
+export const sliderOptionsHeat = {
   range: {
     min:1,
     max:3,
@@ -79,7 +79,7 @@ const sliderOptionsHeat = {
 };
 
 //название эффектов - настройка для effects.js
-const EFFECTS = {
+export const EFFECTS = {
   none: sliderOptionsDefault,
   chrome: sliderOptionsChromeSepia,
   sepia: sliderOptionsChromeSepia,
@@ -87,14 +87,13 @@ const EFFECTS = {
   phobos: sliderOptionsPhobos,
   heat: sliderOptionsHeat,
 };
-console.log(EFFECTS.chrome);
-//Применение бОльшего эффекта//value из поля слайдера
-const getChromeStyleFilter = (value) => `grayscale(${value})`;
-const getSepiaStyleFilter = (value) => `sepia(${value})`;
-const getMarvinStyleFilter = (value) => `invert(${value}%)`;
-const getPhobosStyleFilter = (value) => `blur(${value}px)`;
-const getHeatStyleFilter = (value) => `brightness(${value})`;
 
-export {QUANTITY_PHOTOS, MIN_LIKES, MAX_LIKES, MIN_COMMENTS, MAX_COMMENTS, QUANTITY_AVATAR, NAMES, DESCRIPTION, MESSAGES,EFFECTS,getChromeStyleFilter,getSepiaStyleFilter,getMarvinStyleFilter,getPhobosStyleFilter,getHeatStyleFilter};
-
+export const ImgEffects = {
+  none: () => '',
+  chrome: (value) => `grayscale(${value})`,
+  sepia: (value) => `sepia(${value})`,
+  marvin: (value) => `invert(${value}%)`,
+  phobos: (value) => `blur(${value}px)`,
+  heat: (value) => `brightness(${value})`
+};
 

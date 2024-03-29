@@ -1,6 +1,9 @@
 import {body} from './modal.js';
 import {isEscapeKey} from './utils.js';
-import{EFFECTS,getChromeStyleFilter,getSepiaStyleFilter,getMarvinStyleFilter,getPhobosStyleFilter,getHeatStyleFilter} from './constants.js';
+import{
+  EFFECTS,
+  ImgEffects
+} from './constants.js';
 import {resetScale} from './scale.js';
 
 //красный значок инстаграмма на основном окне
@@ -62,20 +65,18 @@ noUiSlider.create(sliderContainer, {
 //Обновление настроек слайдера для каждого эффекта
 const updateSlider = (evt) => {
   //const currentInput = evt.target.closest('.effects__item');
-  if (evt.target.checked) {
-    console.log(evt.target);
+  if (evt.target.classList.contains('effects__radio')) {
     const currentEffect = evt.target.value;
     sliderContainer.noUiSlider.updateOptions(EFFECTS[currentEffect]);//VALUE - CHROME
-    sliderContainer.noUiSlider.on('update',() => {
-    //запись в спрятанный инпут значение ползунка
-      effectLevelInput.value = sliderContainer.noUiSlider.get();
-      console.log(effectLevelInput.value);
-      getEffectToPhoto(currentEffect,effectLevelInput.value);
-    });
-  } else {
-    sliderContainer.noUiSlider.updateOptions(EFFECTS[0]);// Это сброс до настроек без эффектов. Он здесь нужен?
   }
 };
+
+sliderContainer.noUiSlider.on('update',() => {
+  //запись в спрятанный инпут значение ползунка
+  effectLevelInput.value = sliderContainer.noUiSlider.get();
+  const currentEffect = document.querySelector('.effects__radio:checked');
+  getEffectToPhoto(currentEffect.value, effectLevelInput.value);
+});
 
 //Закрытие окна. Удаление обработчика escape. Удаление обработчика клика,Удаление посл класса с больш фото. удаление scale
 const closeUploadModal = () => {
@@ -91,6 +92,7 @@ const closeUploadModal = () => {
 
 //Открытие мод окна. Добавление обработчика закрытия escape. Добавл обработчика Х
 const openUploadModal = () => {
+  //УБРАТЬ ЗДЕСЬ И В CLOSE В ОТДЕЛЬНУЮ ФУНКЦИЮ
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   imgUploadEffectLevel.classList.add('hidden');
@@ -111,32 +113,12 @@ const showFilterModal = (evt) => {
 imgUploadInput.addEventListener('change',showFilterModal);
 
 function getEffectToPhoto (effect,value) {
-  switch(effect){
-    case 'chrome' :
-      imgUploadPreview.style.filter = getChromeStyleFilter(value);
-      imgUploadEffectLevel.classList.remove('hidden');
-      break;
-    case 'sepia' :
-      imgUploadPreview.style.filter = getSepiaStyleFilter(value);
-      imgUploadEffectLevel.classList.remove('hidden');
-      break;
-    case 'marvin' :
-      imgUploadPreview.style.filter = getMarvinStyleFilter(value);
-      imgUploadEffectLevel.classList.remove('hidden');
-      break;
-    case 'phobos' :
-      imgUploadPreview.style.filter = getPhobosStyleFilter(value);
-      imgUploadEffectLevel.classList.remove('hidden');
-      break;
-    case 'heat' :
-      imgUploadPreview.style.filter = getHeatStyleFilter(value);
-      imgUploadEffectLevel.classList.remove('hidden');
-      break;
-    default:
-      imgUploadPreview.style.filter = 'none';
-      imgUploadEffectLevel.classList.add('hidden');
+  imgUploadPreview.style.filter = ImgEffects[effect](value);
+  if(effect === 'none') {
+    imgUploadEffectLevel.classList.add('hidden');
+  } else {
+    imgUploadEffectLevel.classList.remove('hidden');
   }
 }
-
 
 export {getEffectToPhoto,imgUploadPreview};
