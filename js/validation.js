@@ -95,14 +95,14 @@ commentTextarea.addEventListener('keydown', (evt) => {
 
 //Отправка формы на валидацию
 
-// formForValidation.addEventListener('submit', (evt) => {
-//   evt.preventDefault();
-//   if (
-//     validate(formForValidation, hashtagInput, commentTextarea)
-//   ) {
-//     formForValidation.submit();
-//   }
-// });
+formForValidation.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  if (
+    pristine.validate()
+  ) {
+    formForValidation.submit();
+  }
+});
 
 
 // КУДА СТАВИМ И ПОЧЕМУ?
