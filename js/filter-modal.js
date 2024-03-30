@@ -5,6 +5,7 @@ import{
   ImgEffects
 } from './constants.js';
 import {resetScale} from './scale.js';
+import{pristineReset} from './validation.js';
 
 //красный значок инстаграмма на основном окне
 const imgUploadInput = document.querySelector('.img-upload__input');
@@ -84,6 +85,7 @@ const closeUploadModal = () => {
   body.classList.remove('modal-open');
   resetScale();
   resetFilter();
+  pristineReset()
   //Удаляю слушатель с ul - checkbox
   effectsList.removeEventListener('change', updateSlider);
   document.removeEventListener('keydown', onDocumentKeyDown);

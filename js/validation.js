@@ -37,6 +37,7 @@ const validateHashtags = (hashtagElement) => {
   const hashtagArr = [...hashtagElement.trim().split(' ')];
   const hashtagReg = /^#[a-zа-яё0-9]{1,19}$/i;
   const uniqueArr = [...new Set(hashtagArr)];
+
   if(!hashtagElement) {
     return true;
   } else {
@@ -64,8 +65,6 @@ const validateComment = (comment) => {
   return true;
 };
 
-pristine.validate();
-
 //ГДЕ ВЫЗЫВАЕМ???
 // validation(
 //   hashtagInput,
@@ -84,6 +83,7 @@ pristine.addValidator(
   getErrorMessage
 );
 
+pristine.validate();
 
 //Обработка ESC  - чтоб не улетало автоматически
 commentTextarea.addEventListener('keydown', (evt) => {
@@ -106,7 +106,7 @@ commentTextarea.addEventListener('keydown', (evt) => {
 
 
 // КУДА СТАВИМ И ПОЧЕМУ?
-pristine.reset();
+export const pristineReset = () => pristine.reset();
 
 
 
