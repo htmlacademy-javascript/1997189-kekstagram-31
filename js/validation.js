@@ -29,7 +29,89 @@ const pristine = new Pristine(
 
 //общая функция для валиадции хэштэгов и комментов - validation
 //в validation передаю найденные поля инпут и текстэриа
-const validation = (
+
+let message = '';
+const getErrorMessage = () => message;
+  //функция для валидации хэштегов
+const validateHashtags = (hashtagElement) => {
+  const hashtagArr = [...hashtagElement.trim().split(' ')];
+  const hashtagReg = /^#[a-zа-яё0-9]{1,19}$/i;
+  const uniqueArr = [...new Set(hashtagArr)];
+  if(!hashtagElement) {
+    return true;
+  } else {
+    if(hashtagArr.length > 5) {
+      message = errorMessage.hashtag.INCORRECT_QUANTITY;
+      return false;
+    }
+    if(hashtagArr.length !== uniqueArr.length) {
+      message = errorMessage.hashtag.NOT_UNIQUE_HASHTAG;
+      return false;
+    }
+    if(!hashtagArr.every((elem) => hashtagReg.test(elem))) {
+      message = errorMessage.hashtag.INVALID_HASHTAG;
+      return false;
+    }
+    return true;
+  }
+};
+  //функция для валидации комментов
+const validateComment = (comment) => {
+  if (comment.length > MAX_COMMENT_LENGTH) {
+    message = errorMessage.comment.MAX_COMMENT_LENGTH;//ЗАЧЕМ ЕСЛИ МОЖНО ПОСТАВИТЬ  maxlength="140"
+    return false;
+  }
+  return true;
+};
+
+pristine.validate();
+
+//ГДЕ ВЫЗЫВАЕМ???
+// validation(
+//   hashtagInput,
+//   commentTextarea
+// );
+
+pristine.addValidator(
+  hashtagInput,
+  validateHashtags,
+  getErrorMessage
+);
+
+pristine.addValidator(
+  commentTextarea,
+  validateComment,
+  getErrorMessage
+);
+
+
+//Обработка ESC  - чтоб не улетало автоматически
+commentTextarea.addEventListener('keydown', (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    evt.stopPropagation();
+  }
+});
+
+//Отправка формы на валидацию
+
+// formForValidation.addEventListener('submit', (evt) => {
+//   evt.preventDefault();
+//   if (
+//     validate(formForValidation, hashtagInput, commentTextarea)
+//   ) {
+//     formForValidation.submit();
+//   }
+// });
+
+
+// КУДА СТАВИМ И ПОЧЕМУ?
+pristine.reset();
+
+
+
+
+/**const validation = (
   hashtagElem,
   commentElem
 ) => {
@@ -112,8 +194,7 @@ formForValidation.addEventListener('submit', (evt) => {
 // КУДА СТАВИМ И ПОЧЕМУ?
 pristine.reset();
 
-
-
+ */
 
  //Cравнение хэштэгов на уникальность
   // const compareHashtags = (array) => {
