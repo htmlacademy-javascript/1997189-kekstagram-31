@@ -32,7 +32,7 @@ const pristine = new Pristine(
 
 let message = '';
 const getErrorMessage = () => message;
-  //функция для валидации хэштегов
+//функция для валидации хэштегов
 const validateHashtags = (hashtagElement) => {
   const hashtagArr = [...hashtagElement.trim().split(' ')];
   const hashtagReg = /^#[a-zа-яё0-9]{1,19}$/i;
