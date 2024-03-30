@@ -34,7 +34,8 @@ let message = '';
 const getErrorMessage = () => message;
 //функция для валидации хэштегов
 const validateHashtags = (hashtagElement) => {
-  const hashtagArr = [...hashtagElement.trim().split(' ')];
+  const hashtagArr = [...hashtagElement.replace(/\s+/g,' ').trim().split(' ')];
+  //console.log(hashtagElement.trim().split(' '))
   const hashtagReg = /^#[a-zа-яё0-9]{1,19}$/i;
   const uniqueArr = [...new Set(hashtagArr)];
 
@@ -64,12 +65,6 @@ const validateComment = (comment) => {
   }
   return true;
 };
-
-//ГДЕ ВЫЗЫВАЕМ???
-// validation(
-//   hashtagInput,
-//   commentTextarea
-// );
 
 pristine.addValidator(
   hashtagInput,
