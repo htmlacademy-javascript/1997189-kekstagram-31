@@ -141,4 +141,6 @@ form.addEventListener('submit', (evt) => {
   }
 });
 
+console.log('стереть');
+
 export {getEffectToPhoto,imgUploadPreview};
