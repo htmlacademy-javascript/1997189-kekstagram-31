@@ -91,19 +91,19 @@ commentTextarea.addEventListener('keydown', (evt) => {
 
 //Отправка формы на валидацию
 
-formForValidation.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if (
-    pristine.validate()
-  ) {
-    formForValidation.submit();
-  }
-});
+// formForValidation.addEventListener('submit', (evt) => {
+//   evt.preventDefault();
+//   if (
+//     pristine.validate()
+//   ) {
+//     formForValidation.submit();
+//   }
+// });
 
 
 // КУДА СТАВИМ И ПОЧЕМУ?
 export const pristineReset = () => pristine.reset();
-
+export const validate = () =>  pristine.validate();
 
 
 

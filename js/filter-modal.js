@@ -5,7 +5,8 @@ import{
   ImgEffects
 } from './constants.js';
 import {resetScale} from './scale.js';
-import{pristineReset} from './validation.js';
+import{pristineReset, validate} from './validation.js';
+
 
 //красный значок инстаграмма на основном окне
 const imgUploadInput = document.querySelector('.img-upload__input');
@@ -23,10 +24,20 @@ const effectLevelInput = document.querySelector('.effect-level__value');
 const sliderContainer = document.querySelector('.effect-level__slider');
 //поле Изменения глубины эффекта, накладываемого на изображение
 const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
-
+const form = document.querySelector('.img-upload__form');
 //сброс фильтра с главной картинки
 const resetFilter = () => {
   imgUploadPreview.style.filter = 'none';
+};
+
+
+//Обновление настроек слайдера для каждого эффекта
+const updateSlider = (evt) => {
+  //const currentInput = evt.target.closest('.effects__item');
+  if (evt.target.classList.contains('effects__radio')) {
+    const currentEffect = evt.target.value;
+    sliderContainer.noUiSlider.updateOptions(EFFECTS[currentEffect]);//VALUE - CHROME
+  }
 };
 
 //Нажатие escape
@@ -35,6 +46,10 @@ const onDocumentKeyDown = (evt) => {
     evt.preventDefault();//нужен
     body.classList.remove('modal-open');
     imgUploadOverlay.classList.add('hidden');
+    resetFilter();
+    resetScale();
+    pristineReset();
+    //effectsList.removeEventListener('change', updateSlider);
   }
 };
 
@@ -63,14 +78,6 @@ noUiSlider.create(sliderContainer, {
   },
 });
 
-//Обновление настроек слайдера для каждого эффекта
-const updateSlider = (evt) => {
-  //const currentInput = evt.target.closest('.effects__item');
-  if (evt.target.classList.contains('effects__radio')) {
-    const currentEffect = evt.target.value;
-    sliderContainer.noUiSlider.updateOptions(EFFECTS[currentEffect]);//VALUE - CHROME
-  }
-};
 
 sliderContainer.noUiSlider.on('update',() => {
   //запись в спрятанный инпут значение ползунка
@@ -85,7 +92,7 @@ const closeUploadModal = () => {
   body.classList.remove('modal-open');
   resetScale();
   resetFilter();
-  pristineReset()
+  pristineReset();
   //Удаляю слушатель с ul - checkbox
   effectsList.removeEventListener('change', updateSlider);
   document.removeEventListener('keydown', onDocumentKeyDown);
@@ -122,5 +129,16 @@ function getEffectToPhoto (effect,value) {
     imgUploadEffectLevel.classList.remove('hidden');
   }
 }
+
+//Отправка формы, если форма проходит валидацию!
+form.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  if (
+    validate()
+  ) {
+    form.submit();
+    console.log('asd');
+  }
+});
 
 export {getEffectToPhoto,imgUploadPreview};
