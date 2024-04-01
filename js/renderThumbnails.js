@@ -22,7 +22,6 @@ const localData = [];
 const setData = (photos) => {
   localData.length = 0;
   localData.push(...photos);
-  console.log(localData);
 };
 
 const renderPhotos = (data) => {

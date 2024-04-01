@@ -718,6 +718,12 @@ main {
   z-index: 10000;
   position: relative;
 }
+/*
+.text-error {
+  font-size: 14px;
+  font-weight: 600;
+  color: #c00;
+} */
 
 
 /**

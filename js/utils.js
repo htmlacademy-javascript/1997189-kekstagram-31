@@ -24,7 +24,6 @@ const createUniqueId = (min,max) => {
       currentValue = getRandomInteger(min,max);
     }
     previousValues.push(currentValue);
-    console.log('create unique ', currentValue)
     return currentValue;
   };
 };
