@@ -117,7 +117,7 @@ const openUploadModal = () => {
 const showFilterModal = () => {
   //evt.preventDefault();
   openUploadModal();
-  imgUploadInput.value = '';// при выборе другой фотографии в дальнейшем
+  //imgUploadInput.value = '';// при выборе другой фотографии в дальнейшем
 };
 
 //На появление в инпуте файла, показываю модальное окно с котенком
