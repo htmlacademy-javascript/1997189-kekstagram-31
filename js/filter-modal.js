@@ -130,17 +130,48 @@ function getEffectToPhoto (effect,value) {
   }
 }
 
+//Нужно сделать закрытие окна при нажатии ОПУБЛИКОВАТь, иначе кнопка будет доступна, ее будут нажимать и данные будут отправляться много раз
+//Заводим функцию, экспортируем ее наружу в main
+//В параметр success передаю функцию-коллбэк, которая будет вызываться при успешной отправке формы
+//при успешной отправке формы параметром буду передавать функцию закрытия мод окна closeUploadModal
+//setFilterModalSubmit нужна, чтобы можно было подписаться на событие отправки формы из другого модуля
+
+//const setFilterModalSubmit = (onSuccess) => {
 //Отправка формы, если форма проходит валидацию!
 form.addEventListener('submit', (evt) => {
+//если не поставить, то форма улетит на сервер
   evt.preventDefault();
   if (
     validate()
   ) {
-    form.submit();
-    console.log('asd');
+    //console.log(onSuccess);
+    const formData = new FormData(evt.target);
+    fetch('https://31.javascript.htmlacademy.pro/kekstagram',
+      {
+        method: 'POST',
+        body: formData,
+      },
+      //добавляем then после добавления ф closeUploadModal в setFilterModalSubmit , кот. вызвана в main
+    ).then ((response) => {
+      if(response.ok) {
+        closeUploadModal();
+        console.log(response.ok)
+      } else {
+        console.log('не удалось отправить форму');
+      }
+    })
+      .catch((err) => {
+        console.log(err);
+      })
+      //ПОЧЕМУ НЕ НУЖЕН ЗДЕСЬ САБМИТ ДЛЯ ПРОСМОТРА, ЧТО ДАННЫЕ УШЛИ ПО ФЕЧУ?
+    //form.submit();
+  } else {
+    console.log('форма не валидна');
   }
 });
+//};
 
-console.log('стереть');
 
-export {getEffectToPhoto,imgUploadPreview};
+export {getEffectToPhoto,imgUploadPreview,closeUploadModal};
+//для импорта в main экспортируем closeUploadModal
+//setFilterModalSubmit,

@@ -1,6 +1,6 @@
 import {QUANTITY_PHOTOS, MIN_LIKES, MAX_LIKES, MIN_COMMENTS, MAX_COMMENTS, QUANTITY_AVATAR, NAMES, DESCRIPTION, MESSAGES} from './constants.js';
 
-import {getRandomInteger, generateCountOfPhotos, getRandomArrayElement,createUniqueId} from './utils.js';
+/*import {getRandomInteger, generateCountOfPhotos, getRandomArrayElement,createUniqueId} from './utils.js';
 
 const generateId = generateCountOfPhotos();
 const generatePhotoId = generateCountOfPhotos();
@@ -24,4 +24,4 @@ const createObjectOfPhotos = () => ({
 const createArraysOfPhotos = () => Array.from({length: QUANTITY_PHOTOS}, createObjectOfPhotos);
 
 
-export{createArraysOfPhotos};
+export{createArraysOfPhotos};*/
