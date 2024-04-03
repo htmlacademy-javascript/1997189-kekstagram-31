@@ -2,8 +2,8 @@
 import {renderPhotos} from './renderThumbnails.js';
 import './filter-modal.js';
 import './validation.js';
-// import {setFilterModalSubmit} from './filter-modal.js';
-// import {closeUploadModal} from './filter-modal.js';
+import {setFilterModalSubmit} from './filter-modal.js';
+import {closeUploadModal} from './filter-modal.js';
 
 //const data = createArraysOfPhotos();
 //renderPhotos(data);
@@ -16,4 +16,4 @@ fetch('https://31.javascript.htmlacademy.pro/kekstagram/data')
   });
 
   //В точке входа передаем в обработчик события передаем коллбэк закрытия окна при успешной отправке формы//далее смотрим в filter-modal
-//setFilterModalSubmit(closeUploadModal);
+setFilterModalSubmit(closeUploadModal);
