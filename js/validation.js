@@ -42,7 +42,7 @@ const validateHashtags = (hashtagElement) => {
   if(!hashtagElement) {
     return true;
   } else {
-     if(hashtagArr.length > 5) {
+    if(hashtagArr.length > 5) {
       message = errorMessage.hashtag.INCORRECT_QUANTITY;
       return false;
     }

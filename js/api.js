@@ -11,12 +11,12 @@ const submitBtn = document.querySelector('.img-upload__submit');
 const blockSubmitBtn = () => {
   submitBtn.disabled = true;
   submitBtn.textContent = 'Публикую...';
-}
+};
 
 const unBlockSubmitBtn = () => {
   submitBtn.disabled = false;
   submitBtn.textContent = 'Опубликовать';
-}
+};
 
 
 //Принял фото с сервера, отрисовал их вместо генерированных фото из data.js
@@ -31,7 +31,7 @@ const getData = (onSuccess) => {
 };
 
 //добавить внутрь данные по отправке формы, чтобы можно было вызвать с любого места
-const sendData = (onSuccess,onFail,body) => {}
+//const sendData = (onSuccess,onFail,body) => {};
 //ДОДЕЛАТЬ:закрытие по клику на произвольную область экрана за пределами блока с сообщением
 
 const onSuccessButtonKeyDown = (evt) => {

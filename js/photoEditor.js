@@ -48,19 +48,19 @@ effectsList.addEventListener('change', (evt) => {
   if (selectedEffect === 'none') {
     resetEffects();
   } else {
-    sliderElement.noUiSlider.updateOptions(Effects[selectedEffect.toUpperCase()])
+    sliderElement.noUiSlider.updateOptions(Effects[selectedEffect.toUpperCase()]);
   }
 });
 
 const openPhotoEditor = () => {
   photoEditor.classList.remove('hidden');
-}
+};
 
 const closePhotoEditor = () => {
   photoEditor.classList.add('hidden');
   resetScale();
   resetEffects();
-}
+};
 
 export {
   openPhotoEditor,
