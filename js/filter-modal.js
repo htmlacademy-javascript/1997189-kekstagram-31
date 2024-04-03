@@ -5,7 +5,8 @@ import{
   ImgEffects
 } from './constants.js';
 import {resetScale} from './scale.js';
-import{pristineReset, validate} from './validation.js';
+import{pristineReset} from './validation.js';
+//, validate
 
 
 //красный значок инстаграмма на основном окне
@@ -24,7 +25,7 @@ const effectLevelInput = document.querySelector('.effect-level__value');
 const sliderContainer = document.querySelector('.effect-level__slider');
 //поле Изменения глубины эффекта, накладываемого на изображение
 const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
-const form = document.querySelector('.img-upload__form');
+//const form = document.querySelector('.img-upload__form');
 //сброс фильтра с главной картинки
 const resetFilter = () => {
   imgUploadPreview.style.filter = 'none';
@@ -113,7 +114,7 @@ const openUploadModal = () => {
   effectsList.addEventListener('change', updateSlider);
 };
 
-const showFilterModal = (evt) => {
+const showFilterModal = () => {
   //evt.preventDefault();
   openUploadModal();
   //imgUploadInput.value = '';// при выборе другой фотографии в дальнейшем
@@ -131,61 +132,61 @@ function getEffectToPhoto (effect,value) {
   }
 }
 
-const successTemplate = document.querySelector('#success').content.querySelector('.success');
+// const successTemplate = document.querySelector('#success').content.querySelector('.success');
 
-const successMessage = successTemplate.cloneNode(true);
+// const successMessage = successTemplate.cloneNode(true);
 
-//ДОДЕЛАТЬ:закрытие по клику на произвольную область экрана за пределами блока с сообщением
+// //ДОДЕЛАТЬ:закрытие по клику на произвольную область экрана за пределами блока с сообщением
 
-const onSuccessButtonKeyDown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();//нужен
-    closeSuccessMessage();
-  }
-};
+// const onSuccessButtonKeyDown = (evt) => {
+//   if (isEscapeKey(evt)) {
+//     evt.preventDefault();//нужен
+//     closeSuccessMessage();
+//   }
+// };
 
-//искать кнопку здесь или вне?
-const showSuccessMessage = () => {
- // Добавляю визуал об успехе
-  document.body.append(successMessage);
-  //ставлю слушатель на кнопку закрытия
-  const successButton = successMessage.querySelector('.success__button');
+// //искать кнопку здесь или вне?
+// const showSuccessMessage = () => {
+//   // Добавляю визуал об успехе
+//   document.body.append(successMessage);
+//   //ставлю слушатель на кнопку закрытия
+//   const successButton = successMessage.querySelector('.success__button');
 
-  successButton.addEventListener('click', closeSuccessMessage);
-  document.addEventListener('keydown', onSuccessButtonKeyDown);
-};
+//   successButton.addEventListener('click', closeSuccessMessage);
+//   document.addEventListener('keydown', onSuccessButtonKeyDown);
+// };
 
-function closeSuccessMessage () {
-  successMessage.remove();
+// function closeSuccessMessage () {
+//   successMessage.remove();
 
-  //successButton.removeEventListener('click', closeSuccessMessage); Как удалить обработчик клика, если кнопку ищу,когда окно открывается
-  document.removeEventListener('keydown', onSuccessButtonKeyDown);
-}
+//   //successButton.removeEventListener('click', closeSuccessMessage); Как удалить обработчик клика, если кнопку ищу,когда окно открывается
+//   document.removeEventListener('keydown', onSuccessButtonKeyDown);
+// }
 
-const errorLoadTemplate = document.querySelector('#error').content.querySelector('.error');
+// const errorLoadTemplate = document.querySelector('#error').content.querySelector('.error');
 
-//удаление визуала об ошибке
-const closeErrorMessage = () => {
-  errorLoadTemplate.remove();
-};
+// //удаление визуала об ошибке
+// const closeErrorMessage = () => {
+//   errorLoadTemplate.remove();
+// };
 
-const onErrorButtonKeyDown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();//нужен
-    //imgUploadOverlay.classList.remove('hidden');
-    closeErrorMessage();
-  }
-};
+// const onErrorButtonKeyDown = (evt) => {
+//   if (isEscapeKey(evt)) {
+//     evt.preventDefault();//нужен
+//     //imgUploadOverlay.classList.remove('hidden');
+//     closeErrorMessage();
+//   }
+// };
 
-//ПРОБЛЕМА - ПРИ ЗАКРЫТИИ ESCAPE ЗАКРЫВАЕТСЯ ВСЕ ОКНО!!!
+// //ПРОБЛЕМА - ПРИ ЗАКРЫТИИ ESCAPE ЗАКРЫВАЕТСЯ ВСЕ ОКНО!!!
 
-const showErrorMessage = () => {
-  document.body.append(errorLoadTemplate);
+// const showErrorMessage = () => {
+//   document.body.append(errorLoadTemplate);
 
-  const errorButtonClose = document.querySelector('.error__button');
-  errorButtonClose.addEventListener('click',closeErrorMessage);
-  document.addEventListener('keydown', onErrorButtonKeyDown);
-};
+//   const errorButtonClose = document.querySelector('.error__button');
+//   errorButtonClose.addEventListener('click',closeErrorMessage);
+//   document.addEventListener('keydown', onErrorButtonKeyDown);
+// };
 
 
 //Нужно сделать закрытие окна при нажатии ОПУБЛИКОВАТь, иначе кнопка будет доступна, ее будут нажимать и данные будут отправляться много раз
@@ -194,46 +195,41 @@ const showErrorMessage = () => {
 //при успешной отправке формы параметром буду передавать функцию закрытия мод окна closeUploadModal
 //setFilterModalSubmit нужна, чтобы можно было подписаться на событие отправки формы из другого модуля
 
-const setFilterModalSubmit = (onSuccess) => {
-//Отправка формы, если форма проходит валидацию!
-  form.addEventListener('submit', (evt) => {
-//если не поставить, то форма улетит на сервер
-    evt.preventDefault();
-    if (
-      validate()
-    ) {
-      //console.log(onSuccess);
-      const formData = new FormData(evt.target);
-      fetch('https://31.javascript.htmlacademy.pro/kekstagram',
-        {
-          method: 'POST',
-          body: formData,
-        },
-        //добавляем then после добавления ф closeUploadModal в setFilterModalSubmit , кот. вызвана в main
-      ).then ((response) => {
-        if(response.ok) {
-          onSuccess();
-          showSuccessMessage();
-        } else {
-          console.log('не удалось отправить форму');
-          showErrorMessage();
-        }
-      })
-        .catch((err) => {
-          //console.log(err);
-          showErrorMessage();
-        });
-      //ПОЧЕМУ НЕ НУЖЕН ЗДЕСЬ САБМИТ ДЛЯ ПРОСМОТРА, ЧТО ДАННЫЕ УШЛИ ПО ФЕЧУ?
-    //form.submit();
-  } else {
-    console.log('форма не валидна');
-  }
-});
-};
+// const setFilterModalSubmit = (onSuccess) => {
+// //Отправка формы, если форма проходит валидацию!
+//   form.addEventListener('submit', (evt) => {
+//   //если не поставить, то форма улетит на сервер
+//     evt.preventDefault();
+//     if (
+//       validate()
+//     ) {
+//       //console.log(onSuccess);
+//       const formData = new FormData(evt.target);
+//       fetch('https://31.javascript.htmlacademy.pro/kekstagram',
+//         {
+//           method: 'POST',
+//           body: formData,
+//         },
+//         //добавляем then после добавления ф closeUploadModal в setFilterModalSubmit , кот. вызвана в main
+//       ).then ((response) => {
+//         if(response.ok) {
+//           onSuccess();
+//           showSuccessMessage();
+//         } else {
+//           console.log('не удалось отправить форму');
+//           showErrorMessage();
+//         }
+//       })
+//         .catch((err) => {
+//           //console.log(err);
+//           showErrorMessage(err.message);
+//         });
+//       //ПОЧЕМУ НЕ НУЖЕН ЗДЕСЬ САБМИТ ДЛЯ ПРОСМОТРА, ЧТО ДАННЫЕ УШЛИ ПО ФЕЧУ?
+//     //form.submit();
+//     }
+//   });
+// };
 
-
-
-
-export {getEffectToPhoto,imgUploadPreview,closeUploadModal,setFilterModalSubmit};
+export {getEffectToPhoto,imgUploadPreview,closeUploadModal};
 //для импорта в main экспортируем closeUploadModal
 //setFilterModalSubmit,
