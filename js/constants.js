@@ -1,45 +1,12 @@
-// export const QUANTITY_PHOTOS = 25;//относится к id,url
-// export const MIN_LIKES = 15;
-// export const MAX_LIKES = 200;
-// export const MIN_COMMENTS = 0;
-// export const MAX_COMMENTS = 30;
-// export const QUANTITY_AVATAR = 6;
+export const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
+export const ROUTE = {
+  GET_DATA: '/data'
+};
 
-// export const NAMES = [
-//   'Илья',
-//   'Варвара',
-//   'Иван',
-//   'Александр',
-//   'Петр',
-//   'Юлия',
-//   'Алексей',
-//   'Софья',
-//   'Михаил',
-//   'Леонид',
-//   'Мария',
-//   'Семен',
-//   'Елена',
-//   'Екатерина',
-//   'Николай',
-// ];
-
-// export const DESCRIPTION = ['Луна','Февраль','Поле','Розовый закат','Кот','Каменистые горы'];
-
-// export const MESSAGES = [
-//   'Всё отлично!',
-//   'Плохо',
-//   'Ужас',
-//   'Слишком размыто',
-//   'Вообще ничего не видно',
-//   'А где же собачка на фото?',
-//   'Я думал там холодно',
-//   'Лучше использовать профессиональную камеру',
-//   'В целом всё неплохо. Но не всё.',
-//   'Хорошо бы убирать палец из кадра',
-//   'Кекс сфотает лучше.',
-//   'Замечательное фото',
-//   'Продолжайте фотографировать',
-// ];
+export const errorText = {
+  GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
+  SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
+};
 
 export const sliderOptionsDefault = {
   start: 100,
