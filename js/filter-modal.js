@@ -25,7 +25,7 @@ const effectLevelInput = document.querySelector('.effect-level__value');
 const sliderContainer = document.querySelector('.effect-level__slider');
 //поле Изменения глубины эффекта, накладываемого на изображение
 const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
-//const form = document.querySelector('.img-upload__form');
+const form = document.querySelector('.img-upload__form');
 //сброс фильтра с главной картинки
 const resetFilter = () => {
   imgUploadPreview.style.filter = 'none';
@@ -50,7 +50,11 @@ const onDocumentKeyDown = (evt) => {
     resetFilter();
     resetScale();
     pristineReset();
+    form.reset();
     //effectsList.removeEventListener('change', updateSlider);
+    effectsList.removeEventListener('change', updateSlider);
+    document.removeEventListener('keydown', onDocumentKeyDown);
+    imgUploadBtnCancel.removeEventListener('click', closeUploadModal);
   }
 };
 
@@ -95,6 +99,7 @@ const closeUploadModal = () => {
   resetScale();
   resetFilter();
   pristineReset();
+  form.reset();
   //Удаляю слушатель с ul - checkbox
   effectsList.removeEventListener('change', updateSlider);
   document.removeEventListener('keydown', onDocumentKeyDown);
@@ -133,4 +138,4 @@ function getEffectToPhoto (effect,value) {
 }
 
 
-export {getEffectToPhoto,imgUploadPreview,closeUploadModal};
+export {getEffectToPhoto,imgUploadPreview,closeUploadModal,onDocumentKeyDown};
