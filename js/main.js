@@ -1,10 +1,10 @@
 //import {createArraysOfPhotos} from './data.js';
-import {getData, setFilterModalSubmit} from './api.js';
+import {getData} from './api.js';
 import {renderPhotos} from './renderThumbnails.js';
 import './filter-modal.js';
 import './validation.js';
-import {closeUploadModal} from './filter-modal.js';
-//
+//import {closeUploadModal} from './filter-modal.js';
+//, setFilterModalSubmit
 //const data = createArraysOfPhotos();
 //renderPhotos(data);
 
@@ -22,4 +22,4 @@ getData((photos) => {
 });
 
 //  УБРАТЬ ОТСЮДА
-setFilterModalSubmit(closeUploadModal);
+

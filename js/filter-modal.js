@@ -1,13 +1,24 @@
 import {body} from './modal.js';
 import {isEscapeKey} from './utils.js';
-import{
-  EFFECTS,
-  ImgEffects
-} from './constants.js';
+import{EFFECTS,ImgEffects} from './constants.js';
 import {resetScale} from './scale.js';
 import{pristineReset} from './validation.js';
+//import {setFilterModalSubmit} from './api.js';
 //, validate
 
+//время задержки сообщения об ошибке при получении данных с сервера
+const ALERT_SHOW_TIME = 5000;
+//темплейт разметки об успешной загрузке изображения на сервер
+const successTemplate = document.querySelector('#success').content.querySelector('.success');
+//Копия темплейта об успешн загр изображения на сервер
+const successMessage = successTemplate.cloneNode(true);
+//Кнопка для отправки данных на сервер - ОПУБЛИКОВАТЬ
+const submitBtn = document.querySelector('.img-upload__submit');
+//Поведение кнопки ОПУБЛИКОВАТЬ
+const submitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
 
 //красный значок инстаграмма на основном окне
 const imgUploadInput = document.querySelector('.img-upload__input');
@@ -41,6 +52,7 @@ const updateSlider = (evt) => {
   }
 };
 
+
 //Нажатие escape на модальное окно
 const onDocumentKeyDown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -51,13 +63,25 @@ const onDocumentKeyDown = (evt) => {
     resetScale();
     pristineReset();
     form.reset();
-    //effectsList.removeEventListener('change', updateSlider);
     effectsList.removeEventListener('change', updateSlider);
     document.removeEventListener('keydown', onDocumentKeyDown);
     imgUploadBtnCancel.removeEventListener('click', closeUploadModal);
   }
 };
 
+//Закрытие окна. Удаление обработчика escape. Удаление обработчика клика,Удаление посл класса с больш фото. удаление scale
+function closeUploadModal () {
+  imgUploadOverlay.classList.add('hidden');
+  body.classList.remove('modal-open');
+  resetScale();
+  resetFilter();
+  pristineReset();
+  form.reset();
+  //Удаляю слушатель с ul - checkbox
+  effectsList.removeEventListener('change', updateSlider);
+  document.removeEventListener('keydown', onDocumentKeyDown);
+  imgUploadBtnCancel.removeEventListener('click', closeUploadModal);
+};
 
 //дефолтное значение спрятанного инпута
 effectLevelInput.value = 100;
@@ -92,20 +116,6 @@ sliderContainer.noUiSlider.on('update',() => {
   getEffectToPhoto(currentEffect.value, effectLevelInput.value);
 });
 
-//Закрытие окна. Удаление обработчика escape. Удаление обработчика клика,Удаление посл класса с больш фото. удаление scale
-const closeUploadModal = () => {
-  imgUploadOverlay.classList.add('hidden');
-  body.classList.remove('modal-open');
-  resetScale();
-  resetFilter();
-  pristineReset();
-  form.reset();
-  //Удаляю слушатель с ul - checkbox
-  effectsList.removeEventListener('change', updateSlider);
-  document.removeEventListener('keydown', onDocumentKeyDown);
-  imgUploadBtnCancel.removeEventListener('click', closeUploadModal);
-};
-
 //Открытие мод окна. Добавление обработчика закрытия escape. Добавл обработчика Х
 const openUploadModal = () => {
   //УБРАТЬ ЗДЕСЬ И В CLOSE В ОТДЕЛЬНУЮ ФУНКЦИЮ
@@ -137,5 +147,79 @@ function getEffectToPhoto (effect,value) {
   }
 }
 
+//Поведение кнопки опубликовать во время отправки
+export const blockSubmitBtn = () => {
+  submitBtn.disabled = true;
+  submitBtn.textContent = submitButtonText.SENDING;
+};
+
+export const unBlockSubmitBtn = () => {
+  submitBtn.disabled = false;
+  submitBtn.textContent = submitButtonText.IDLE;
+};
+
+//СООБЩЕНИЕ ОШИБКИ ЗАГРУЗКИ ПРИНЯТНЫХ ФОТО
+const dataErrorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
+const errorMessage = dataErrorTemplate.cloneNode(true);
+
+const showDataErrorMessage = () => {
+  document.body.append(errorMessage);
+
+  setTimeout(() => {
+    errorMessage.remove();
+  },ALERT_SHOW_TIME);
+};
+
+const onSuccessButtonKeyDown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();//нужен
+    closeSuccessMessage();
+  }
+};
+
+//искать кнопку здесь или вне?
+export const showSuccessMessage = () => {
+  // Добавляю визуал об успехе
+  document.body.append(successMessage);
+  //ставлю слушатель на кнопку закрытия
+  const successButton = successMessage.querySelector('.success__button');
+  successButton.addEventListener('click', closeSuccessMessage);
+  document.addEventListener('keydown', onSuccessButtonKeyDown);
+};
+
+function closeSuccessMessage() {
+  successMessage.remove();
+  //successButton.removeEventListener('click', closeSuccessMessage); Как удалить обработчик клика, если кнопку ищу,когда окно открывается
+  document.removeEventListener('keydown', onSuccessButtonKeyDown);
+}
+
+const errorLoadTemplate = document.querySelector('#error').content.querySelector('.error');
+
+//удаление визуала об ошибке
+const closeErrorMessage = () => {
+  errorLoadTemplate.remove();
+  //добавляю закрытие по escape всего мод окна
+  document.addEventListener('keydown', onDocumentKeyDown);
+};
+
+const onErrorButtonKeyDown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();//нужен
+    closeErrorMessage();
+  }
+};
+
+//ПРОБЛЕМА - ПРИ ЗАКРЫТИИ ESCAPE -исправила
+//СООБЩЕНИ ОШИБКИ ОТПРАВКИ
+export const showErrorMessage = () => {
+  document.body.append(errorLoadTemplate);
+  const errorButtonClose = document.querySelector('.error__button');
+  //удаляю закрытие по escape всего мод окна
+  document.removeEventListener('keydown', onDocumentKeyDown);
+  errorButtonClose.addEventListener('click', closeErrorMessage);
+  document.addEventListener('keydown', onErrorButtonKeyDown);
+};
+
+export {showDataErrorMessage};
 
 export {getEffectToPhoto,imgUploadPreview,closeUploadModal,onDocumentKeyDown};
