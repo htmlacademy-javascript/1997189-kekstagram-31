@@ -2,9 +2,8 @@ import {body} from './modal.js';
 import {isEscapeKey} from './utils.js';
 import{EFFECTS,ImgEffects} from './constants.js';
 import {resetScale} from './scale.js';
-import{pristineReset} from './validation.js';
+import{pristineReset,validate} from './validation.js';
 import {sendData} from './api.js';
-import { validate } from './validation.js';
 
 //время задержки сообщения об ошибке при получении данных с сервера
 const ALERT_SHOW_TIME = 5000;

@@ -1,8 +1,6 @@
 import {showDataErrorMessage,showSuccessMessage,showErrorMessage,unBlockSubmitBtn,closeUploadModal} from './filter-modal.js';
 import {BASE_URL,ROUTE, errorText} from './constants.js';
 
-//`${BASE_URL}${ROUTE.GET_DATA}`
-//А если response не ок???
 const getData = (onSuccess) => {
   fetch(`${BASE_URL}${ROUTE.GET_DATA}`)
     .then((response) => {
