@@ -1,6 +1,6 @@
-import { resetScale } from "./scale.js";
-import { Effects } from "./constants.js";
-import { InlineStyles } from "./constants.js";
+import { resetScale } from './scale.js';
+import { Effects } from './constants.js';
+import { InlineStyles } from './constants.js';
 
 const photoEditor = document.querySelector('.img-upload__overlay');
 const previewImageElement = photoEditor.querySelector('.img-upload__preview img');
@@ -41,26 +41,26 @@ sliderElement.noUiSlider.on('update', () => {
 const resetEffects = () => {
   previewImageElement.style.filter = '';
   sliderElement.parentElement.classList.add('hidden');
-}
+};
 
 effectsList.addEventListener('change', (evt) => {
   selectedEffect = evt.target.value;
   if (selectedEffect === 'none') {
     resetEffects();
   } else {
-    sliderElement.noUiSlider.updateOptions(Effects[selectedEffect.toUpperCase()])
+    sliderElement.noUiSlider.updateOptions(Effects[selectedEffect.toUpperCase()]);
   }
 });
 
 const openPhotoEditor = () => {
   photoEditor.classList.remove('hidden');
-}
+};
 
 const closePhotoEditor = () => {
   photoEditor.classList.add('hidden');
   resetScale();
   resetEffects();
-}
+};
 
 export {
   openPhotoEditor,
