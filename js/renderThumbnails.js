@@ -1,17 +1,3 @@
-//import {createArraysOfPhotos} from './data.js';
-
-// Задача
-// Отобразить фотографии других пользователей.
-
-// Заведите модуль, который будет отвечать за отрисовку миниатюр.
-
-// На основе временных данных для разработки и шаблона #picture создайте DOM-элементы, соответствующие фотографиям, и заполните их данными:
-
-// Адрес изображения url подставьте как атрибут src изображения.
-// Описание изображения description подставьте в атрибут alt изображения.
-// Количество лайков likes выведите в блок .picture__likes.
-// Количество комментариев comments выведите в блок .picture__comments.
-// Отрисуйте сгенерированные DOM-элементы в блок .pictures. Для вставки элементов используйте DocumentFragment.
 
 // Подключите модуль в проект.
 import { openModal } from './modal.js';
@@ -23,7 +9,11 @@ const setData = (photos) => {
   localData.length = 0;
   localData.push(...photos);
 };
-
+export const removeThumbnails = () => {
+  document.querySelectorAll('.picture').forEach((picture) => {
+    picture.remove();
+  });
+};
 const renderPhotos = (data) => {
   setData(data);
   const fragment = document.createDocumentFragment();

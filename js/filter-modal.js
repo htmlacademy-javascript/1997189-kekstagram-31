@@ -26,6 +26,7 @@ const imgUploadInput = document.querySelector('.img-upload__input');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 //большое фото
 const imgUploadPreview = document.querySelector('.img-upload__preview img');
+const thumbnails = [...document.querySelectorAll('.effects__preview')];
 // кнопка закрытия модального окна с фильтрами
 const imgUploadBtnCancel = document.querySelector('.img-upload__cancel');
 //ul,в котором радио-кнопки превью - фильтры
@@ -41,6 +42,9 @@ const errorLoadTemplate = document.querySelector('#error').content.querySelector
 //СООБЩЕНИЕ ОШИБКИ ЗАГРУЗКИ ПРИНЯТНЫХ ФОТО
 const dataErrorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
 const errorMessage = dataErrorTemplate.cloneNode(true);
+
+//ДЛЯ ПОДСТАНОВКИ ФОТО ПОЛЬЗОВАТЕЛЯ
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 //сброс фильтра с главной картинки
 const resetFilter = () => {
@@ -123,9 +127,16 @@ const openUploadModal = () => {
 };
 
 const showFilterModal = () => {
-  //evt.preventDefault();
   openUploadModal();
-  //imgUploadInput.value = '';// при выборе другой фотографии в дальнейшем
+  const file = imgUploadInput.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    imgUploadPreview.src = URL.createObjectURL(file);
+    thumbnails.forEach((thumbnail) => {
+      thumbnail.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+    });
+  }
 };
 
 //На появление в инпуте файла, показываю модальное окно с котенком
