@@ -1,12 +1,17 @@
-import {commentElement,commentsContainer,commentsLoader,quantityOfVisibleComments} from './modal.js';
+import {
+  commentElement,
+  commentsContainer,
+  commentsLoader,
+  quantityOfVisibleComments
+} from './modal.js';
 let comments = [];
 let currentCount = 0;
-const step = 5;
-let count = 0;
+const STEP = 5;
+//let COUNT = 0;
 
 const renderNextComments = () => {
   const fragment = document.createDocumentFragment();
-  const renderedComments = comments.slice(currentCount, currentCount + step);
+  const renderedComments = comments.slice(currentCount, currentCount + STEP);
 
   renderedComments.forEach(({avatar,name,message}) => {
     const commentElementClone = commentElement.cloneNode(true);
@@ -29,11 +34,11 @@ const renderNextComments = () => {
 
 const clearComments = () => {
   currentCount = 0;
-  count = 0;
+  //COUNT = 0;
   commentsContainer.innerHTML = '';
   commentsLoader.classList.remove('hidden');
   commentsLoader.removeEventListener('click', renderNextComments);
-}
+};
 
 const renderComments = (currentPhotoComments) => {
   comments = currentPhotoComments;

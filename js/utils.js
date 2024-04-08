@@ -45,11 +45,16 @@ function debounce (callback, timeoutDelay = 500) {
 
     // Затем устанавливаем новый таймаут с вызовом колбэка на ту же задержку
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
-
     // Таким образом цикл «поставить таймаут - удалить таймаут» будет выполняться,
     // пока действие совершается чаще, чем переданная задержка timeoutDelay
   };
 }
 
-
-export {getRandomInteger, generateCountOfPhotos, getRandomArrayElement, createUniqueId, isEscapeKey,debounce};
+export {
+  getRandomInteger,
+  generateCountOfPhotos,
+  getRandomArrayElement,
+  createUniqueId,
+  isEscapeKey,
+  debounce
+};

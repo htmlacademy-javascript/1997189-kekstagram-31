@@ -1,5 +1,3 @@
-
-// Подключите модуль в проект.
 import { openModal } from './modal.js';
 const cardTemplate = document.querySelector('#picture').content.querySelector('.picture');//шаблон фотографий других пользователей
 const container = document.querySelector('.pictures');// контайнер, куда будем грузить фото других пользователей
@@ -26,14 +24,11 @@ const renderPhotos = (data) => {
     card.querySelector('.picture__comments').textContent = comments.length;
     fragment.appendChild(card);//проверяем добавился ли шаблон в контейнер
   });
-
   container.appendChild(fragment);
 };
 
-
 container.addEventListener('click', (evt) => {
   const currentPicture = evt.target.closest('.picture');
-  //console.log(currentPicture.dataset.pictureId);
 
   if (currentPicture) {
     evt.preventDefault();//если убрать http://127.0.0.1:3000/# НОВАЯ СТРАНИЦА!!!

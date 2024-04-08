@@ -2,7 +2,6 @@ import { isEscapeKey, getPhotoById } from './utils.js';
 
 const DEFAULT_SHOW_COMMENTS_COUNT = 5;
 const STEP_SHOW_COMMENTS_COUNT = 5;
-
 const comments = [];
 let showCommentsCounter = DEFAULT_SHOW_COMMENTS_COUNT;
 
@@ -55,9 +54,7 @@ const closeModal = () => {
   modal.classList.add('hidden');
   document.body.classList.remove('modal-open');
   loaderCommentsButtonElement.classList.remove('hidden');
-
   loaderCommentsButtonElement.removeEventListener('click', loaderButtonClickHandler);
-
   commentList.innerHTML = '';
   comments.length = 0;
   showCommentsCounter = DEFAULT_SHOW_COMMENTS_COUNT;
@@ -77,15 +74,11 @@ const openModal = (evt, photos) => {
     evt.preventDefault();
     modal.classList.remove('hidden');
     document.body.classList.add('modal-open');
-
     document.addEventListener('keydown', documentKeydownHandler);
-
     const photo = getPhotoById(Number(cardElement.dataset.pictureId), photos);
     renderPhoto(photo);
-
     comments.push(...photo.comments);
     renderComments();
-
     loaderCommentsButtonElement.addEventListener('click', loaderButtonClickHandler);
   }
 };

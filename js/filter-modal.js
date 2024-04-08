@@ -1,6 +1,6 @@
 import {body} from './modal.js';
 import {isEscapeKey} from './utils.js';
-import{EFFECTS,ImgEffects} from './constants.js';
+import{Effects,ImgEffects} from './constants.js';
 import {resetScale} from './scale.js';
 import{pristineReset,validate} from './validation.js';
 import {sendData} from './api.js';
@@ -11,15 +11,13 @@ const ALERT_SHOW_TIME = 5000;
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 //Копия темплейта об успешн загр изображения на сервер
 const successMessage = successTemplate.cloneNode(true);
-
 //Кнопка для отправки данных на сервер - ОПУБЛИКОВАТЬ
 const submitBtn = document.querySelector('.img-upload__submit');
 //Поведение кнопки ОПУБЛИКОВАТЬ
-const submitButtonText = {
+const SubmitButtonText = {
   IDLE: 'Опубликовать',
   SENDING: 'Публикую...'
 };
-
 //красный значок инстаграмма на основном окне
 const imgUploadInput = document.querySelector('.img-upload__input');
 //модальное окно с фильтрами
@@ -56,7 +54,7 @@ const updateSlider = (evt) => {
   //const currentInput = evt.target.closest('.effects__item');
   if (evt.target.classList.contains('effects__radio')) {
     const currentEffect = evt.target.value;
-    sliderContainer.noUiSlider.updateOptions(EFFECTS[currentEffect]);
+    sliderContainer.noUiSlider.updateOptions(Effects[currentEffect]);
   }
 };
 
@@ -106,7 +104,6 @@ noUiSlider.create(sliderContainer, {
   },
 });
 
-
 sliderContainer.noUiSlider.on('update',() => {
   //запись в спрятанный инпут значение ползунка
   effectLevelInput.value = sliderContainer.noUiSlider.get();
@@ -154,12 +151,12 @@ function getEffectToPhoto (effect,value) {
 //Поведение кнопки опубликовать во время отправки
 export const blockSubmitBtn = () => {
   submitBtn.disabled = true;
-  submitBtn.textContent = submitButtonText.SENDING;
+  submitBtn.textContent = SubmitButtonText.SENDING;
 };
 
 export const unBlockSubmitBtn = () => {
   submitBtn.disabled = false;
-  submitBtn.textContent = submitButtonText.IDLE;
+  submitBtn.textContent = SubmitButtonText.IDLE;
 };
 
 const showDataErrorMessage = () => {
@@ -203,20 +200,13 @@ function closeSuccessOverlay (evt) {
   }
 }
 
-//const errorOverlay = document.querySelector('.error');
 //удаление визуала об ошибке
 // кнопка errorButtonClose ищется и существует только в showErrorMessage
-//Как УДАЛИТЬ СЛУШАТЕЛЬ errorOverlay,errorButtonClose и КАК ЕЕ ПРАВИЛЬНО искать без ОШИБКИ В КОНСОЛИ
-//он вместе с кнопкой сам уходит, т.к. окно с кнопкой удаляется
 const closeErrorMessage = () => {
   errorLoadTemplate.remove();
   //добавляю закрытие по escape всего мод окна
   document.addEventListener('keydown', onDocumentKeyDown);
   document.removeEventListener('keydown', onErrorButtonKeyDown);
-  // if (errorOverlay) {
-  //   errorOverlay.removeEventListener ('click',closeOverlay);
-  // }
-  //errorButtonClose.removeEventListener('click', closeErrorMessage);
 };
 
 //Функция для закрытия сообщения - ошибки по клику на шторку
@@ -237,7 +227,6 @@ function onErrorButtonKeyDown (evt) {
 export const showErrorMessage = () => {
   document.body.append(errorLoadTemplate);
   const errorButtonClose = document.querySelector('.error__button');
-//КУДА ЭТО ВЫНЕСТИ, ЧТОБ НЕ БЫЛО NULL ПРИ ПОИСКЕ errorOverlay
   const errorOverlay = document.querySelector('.error');
   errorOverlay.addEventListener ('click',closeErrorOverlay);
   //удаляю закрытие по escape всего мод окна
@@ -260,4 +249,10 @@ form.addEventListener('submit', (evt) => {
 });
 
 
-export {getEffectToPhoto,imgUploadPreview,closeUploadModal,onDocumentKeyDown,showDataErrorMessage};
+export {
+  getEffectToPhoto,
+  imgUploadPreview,
+  closeUploadModal,
+  onDocumentKeyDown,
+  showDataErrorMessage
+};

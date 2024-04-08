@@ -16,7 +16,7 @@ const renderScale = (value) => {
   scaleInput.value = `${parseInt(value, 10)}%`;
   const resultForScale = `${(parseInt(value, 10) / 100)}`;
   imgUploadPreview.style.transform = `scale(${resultForScale})`;
-}
+};
 
 scaleSmallerBtn.addEventListener('click', () => {
   const value = parseInt(scaleInput.value, 10);

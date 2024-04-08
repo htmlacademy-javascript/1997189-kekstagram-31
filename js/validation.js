@@ -4,7 +4,7 @@ import{isEscapeKey} from './utils.js';
 const formForValidation = document.querySelector('.img-upload__form');
 const hashtagInput = document.querySelector('.text__hashtags');
 const commentTextarea = document.querySelector('.text__description');
-
+let message = '';
 const MAX_COMMENT_LENGTH = 140;
 
 const errorMessage = {
@@ -30,7 +30,6 @@ const pristine = new Pristine(
 //общая функция для валиадции хэштэгов и комментов - validation
 //в validation передаю найденные поля инпут и текстэриа
 
-let message = '';
 const getErrorMessage = () => message;
 //функция для валидации хэштегов
 const validateHashtags = (hashtagElement) => {

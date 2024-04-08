@@ -15,7 +15,6 @@ const commentsLoader = document.querySelector('.comments-loader');
 
 const body = document.querySelector('body');
 
-
 const onDocumentKeyDown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();//нужен
@@ -29,14 +28,11 @@ const openModal = function ({url, likes, comments, description}) {
   commentsLoader.classList.remove('hidden');
   bigPictureImg.src = url;// заменяем стандартную большую фото на фото текущей "маленькой"
   likesCount.textContent = likes;
-  //quantityOfVisibleComments.textContent = comments.length;
   totalСomments.textContent = comments.length;
   descriptionOfPhoto.textContent = description;
   body.classList.add('modal-open');
   commentsContainer.innerHTML = '';
-
   renderComments(comments);
-
   document.addEventListener('keydown', onDocumentKeyDown);
 };
 
@@ -46,7 +42,6 @@ const closeModal = function () {
   modalElement.classList.add('hidden');
   //удалить обработчик для закрытия
   document.removeEventListener('keydown', onDocumentKeyDown);
-  //прочая логика
 };
 
 //Закрытие модального окна по клику на крестик
@@ -56,4 +51,11 @@ bigPictureCloseButton.addEventListener('click', (evt) => {
   closeModal();
 });
 
-export {commentElement, openModal, commentsContainer, commentsLoader, quantityOfVisibleComments, body};
+export {
+  commentElement,
+  openModal,
+  commentsContainer,
+  commentsLoader,
+  quantityOfVisibleComments,
+  body
+};
