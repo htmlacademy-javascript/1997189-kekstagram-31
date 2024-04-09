@@ -1,17 +1,17 @@
-import {renderPhotos, removeThumbnails} from './renderThumbnails.js';
+import { renderPhotos, removeThumbnails } from './render-thumbnails.js';
+import { debounce } from './utils.js';
 
 const MAX_RANDOM_PHOTO_COUNT = 10;
-const defaultButton = document.querySelector('#filter-default');
-const randomButton = document.querySelector('#filter-random');
-const discussedButton = document.querySelector('#filter-discussed');
-
+const filterFormElement = document.querySelector('.img-filters__form');
 const imgFilters = document.querySelector('.img-filters');
-//форма с фильтрами на главной
-const showImgFilters = () => {
+
+const localData = [];
+
+const showImgFilters = (photos) => {
   imgFilters.classList.remove('img-filters--inactive');
+  localData.push(...photos.slice());
 };
 
-//Определяю активную кнопку
 const getActiveButton = (currentButton) => {
   const activeButton = document.querySelector('.img-filters__button--active');
   if (currentButton !== activeButton) {
@@ -20,46 +20,35 @@ const getActiveButton = (currentButton) => {
   currentButton.classList.add('img-filters__button--active');
 };
 
-//Фильтр по рандомным фото
-const makeRandomFilter = (photos,count) => {
+const makeRandomFilter = (photos, count) => {
   const searchForRandomImages = photos.slice().sort(() => 0.5 - Math.random()).slice(0, count);
-  console.log(searchForRandomImages)
   renderPhotos(searchForRandomImages);
 };
 
- // Обрабатываем нажатие кнопки, применяя рандомный фильтр
-const handleRandomButton = (photos, count) => {
-  randomButton.addEventListener('click', (evt) => {
-    removeThumbnails();
-    getActiveButton(evt.target);
-    makeRandomFilter(photos,count);
-  });
-};
-
-const handleDefaultButton = (photos) => {
-  defaultButton.addEventListener('click', (evt) => {
-    removeThumbnails();
-    getActiveButton(evt.target);
-    renderPhotos(photos);
-  });
-};
+filterFormElement.addEventListener('click', debounce((evt) => {
+  removeThumbnails();
+  getActiveButton(evt.target);
+  switch (evt.target.id) {
+    case 'filter-default':
+      renderPhotos(localData);
+      break;
+    case 'filter-random':
+      makeRandomFilter(localData, MAX_RANDOM_PHOTO_COUNT);
+      break;
+    case 'filter-discussed':
+      findPopularPhotos(localData);
+      break;
+  }
+}, 500));
 
 const sortByQuantityComments = (arr) => {
-  arr.sort((a, b) => a.comments < b.comments ? 1 : -1);
+  arr.sort((element, nextElement) => element.comments < nextElement.comments ? 1 : -1);
 };
 
-function findPopularPhotos (photos) {
+function findPopularPhotos(photos) {
   const photosRating = photos.slice();
   sortByQuantityComments(photosRating);
   renderPhotos(photosRating);
 }
 
-const hundleDiscussedButton = (photos) => {
-  discussedButton.addEventListener('click', (evt) => {
-    removeThumbnails();
-    getActiveButton(evt.target);
-    findPopularPhotos(photos);
-  });
-};
-
-export {showImgFilters,MAX_RANDOM_PHOTO_COUNT,handleRandomButton,handleDefaultButton,hundleDiscussedButton};
+export { showImgFilters, MAX_RANDOM_PHOTO_COUNT };

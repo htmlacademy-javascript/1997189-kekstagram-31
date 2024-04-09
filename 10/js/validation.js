@@ -1,10 +1,9 @@
 import{isEscapeKey} from './utils.js';
 
-//Ищу форму для валидации
 const formForValidation = document.querySelector('.img-upload__form');
 const hashtagInput = document.querySelector('.text__hashtags');
 const commentTextarea = document.querySelector('.text__description');
-
+let message = '';
 const MAX_COMMENT_LENGTH = 140;
 
 const errorMessage = {
@@ -18,7 +17,6 @@ const errorMessage = {
   }
 };
 
-//Отдаю форму Pristine
 const pristine = new Pristine(
   formForValidation,
   {
@@ -27,15 +25,9 @@ const pristine = new Pristine(
     errorTextParent: 'img-upload__field-wrapper',
   });
 
-//общая функция для валиадции хэштэгов и комментов - validation
-//в validation передаю найденные поля инпут и текстэриа
-
-let message = '';
 const getErrorMessage = () => message;
-//функция для валидации хэштегов
 const validateHashtags = (hashtagElement) => {
   const hashtagArr = [...hashtagElement.replace(/\s+/g,' ').trim().split(' ')];
-  //console.log(hashtagElement.trim().split(' '))
   const hashtagReg = /^#[a-zа-яё0-9]{1,19}$/i;
   const uniqueArr = [...new Set(hashtagArr)];
 
@@ -57,10 +49,10 @@ const validateHashtags = (hashtagElement) => {
     return true;
   }
 };
-  //функция для валидации комментов
+
 const validateComment = (comment) => {
   if (comment.length > MAX_COMMENT_LENGTH) {
-    message = errorMessage.comment.MAX_COMMENT_LENGTH;//ЗАЧЕМ ЕСЛИ МОЖНО ПОСТАВИТЬ  maxlength="140"
+    message = errorMessage.comment.MAX_COMMENT_LENGTH;
     return false;
   }
   return true;
@@ -80,7 +72,6 @@ pristine.addValidator(
 
 pristine.validate();
 
-//Обработка ESC  - чтоб не улетало автоматически
 commentTextarea.addEventListener('keydown', (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
