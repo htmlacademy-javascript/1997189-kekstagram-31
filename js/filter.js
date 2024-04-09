@@ -4,7 +4,6 @@ import { debounce } from './utils.js';
 const MAX_RANDOM_PHOTO_COUNT = 10;
 const filterFormElement = document.querySelector('.img-filters__form');
 const imgFilters = document.querySelector('.img-filters');
-
 const localData = [];
 
 const showImgFilters = (photos) => {
