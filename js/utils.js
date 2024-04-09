@@ -4,7 +4,7 @@ function getRandomInteger (min,max) {
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 }
-//Количество фотографий
+
 const generateCountOfPhotos = () => {
   let count = 0;
   return function () {
@@ -12,7 +12,6 @@ const generateCountOfPhotos = () => {
   };
 };
 
-//создать уникальный id
 const createUniqueId = (min,max) => {
   const previousValues = [];
   return function () {
@@ -30,8 +29,22 @@ const createUniqueId = (min,max) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-//Проверка ESCAPE, экспортируем в ?main.js
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
 
-export {getRandomInteger, generateCountOfPhotos, getRandomArrayElement, createUniqueId, isEscapeKey};
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export {
+  getRandomInteger,
+  generateCountOfPhotos,
+  getRandomArrayElement,
+  createUniqueId,
+  isEscapeKey,
+  debounce
+};

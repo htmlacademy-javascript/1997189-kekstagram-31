@@ -45,7 +45,7 @@ const resetEffects = () => {
 
 effectsList.addEventListener('change', (evt) => {
   selectedEffect = evt.target.value;
-  if (selectedEffect === 'none') {
+  if (selectedEffect === 'NONE') {
     resetEffects();
   } else {
     sliderElement.noUiSlider.updateOptions(Effects[selectedEffect.toUpperCase()]);

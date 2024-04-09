@@ -1,9 +1,9 @@
 export const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
-export const ROUTE = {
+export const Route = {
   GET_DATA: '/data'
 };
 
-export const errorText = {
+export const ErrorText = {
   GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
   SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
 };
@@ -45,8 +45,7 @@ export const sliderOptionsHeat = {
   step: 0.1,
 };
 
-//название эффектов - настройка для effects.js
-export const EFFECTS = {
+export const Effects = {
   none: sliderOptionsDefault,
   chrome: sliderOptionsChromeSepia,
   sepia: sliderOptionsChromeSepia,

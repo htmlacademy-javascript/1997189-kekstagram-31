@@ -1,11 +1,17 @@
-import {showDataErrorMessage,showSuccessMessage,showErrorMessage,unBlockSubmitBtn,closeUploadModal} from './filter-modal.js';
-import {BASE_URL,ROUTE, errorText} from './constants.js';
+import {
+  showDataErrorMessage,
+  showSuccessMessage,
+  showErrorMessage,
+  unBlockSubmitBtn,
+  closeUploadModal
+} from './filter-modal.js';
+import {BASE_URL,Route, ErrorText} from './constants.js';
 
 const getData = (onSuccess) => {
-  fetch(`${BASE_URL}${ROUTE.GET_DATA}`)
+  fetch(`${BASE_URL}${Route.GET_DATA}`)
     .then((response) => {
       if (!response.ok) {
-        throw new Error(errorText.GET_DATA);
+        throw new Error(ErrorText.GET_DATA);
       }
       return response.json();
     })
@@ -14,7 +20,7 @@ const getData = (onSuccess) => {
     })
     .catch(() => {
       showDataErrorMessage();
-      throw new Error(errorText.GET_DATA);
+      throw new Error(ErrorText.GET_DATA);
     });
 };
 
@@ -30,12 +36,12 @@ const sendData = (body) => {
       showSuccessMessage();
     } else {
       showErrorMessage();
-      throw new Error(errorText.SEND_DATA);
+      throw new Error(ErrorText.SEND_DATA);
     }
   })
     .catch((err) => {
       showErrorMessage(err.message);
-      throw new Error(errorText.SEND_DATA);
+      throw new Error(ErrorText.SEND_DATA);
     })
     .finally(() => {
       unBlockSubmitBtn();
