@@ -1,6 +1,6 @@
 import { isEscapeKey } from './utils.js';
 import { validation, resetValidation } from './validation.js';
-import { openPhotoEditor, closePhotoEditor } from './photoEditor.js';
+import { openPhotoEditor, closePhotoEditor } from './photo-editor.js';
 
 const uploadFormElement = document.querySelector('.img-upload__form');
 const fileInputElement = uploadFormElement.querySelector('.img-upload__input');
@@ -56,11 +56,6 @@ resetButtonElement.addEventListener('click', () => {
   closeForm();
   document.removeEventListener('keydown', documentKeydownHandler);
 });
-
-// validation(
-//   hashtagsValueElement,
-//   commentValueElement
-// );
 
 uploadFormElement.addEventListener('submit', (evt) => {
   evt.preventDefault();

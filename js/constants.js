@@ -45,7 +45,6 @@ export const sliderOptionsHeat = {
   step: 0.1,
 };
 
-//название эффектов - настройка для effects.js
 export const Effects = {
   none: sliderOptionsDefault,
   chrome: sliderOptionsChromeSepia,

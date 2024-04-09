@@ -1,8 +1,7 @@
 import {isEscapeKey} from './utils.js';
 import {renderComments,clearComments} from './render-comments.js';
 
-const modalElement = document.querySelector('.big-picture');//модальное окно
-//крестик закрытия мод окна большое фото
+const modalElement = document.querySelector('.big-picture');
 const bigPictureCloseButton = modalElement.querySelector('.big-picture__cancel');
 const bigPictureImg = modalElement.querySelector('.big-picture__img img');
 const likesCount = modalElement.querySelector('.likes-count');
@@ -17,7 +16,7 @@ const body = document.querySelector('body');
 
 const onDocumentKeyDown = (evt) => {
   if (isEscapeKey(evt)) {
-    evt.preventDefault();//нужен
+    evt.preventDefault();
     body.classList.remove('modal-open');
     modalElement.classList.add('hidden');
   }
@@ -26,7 +25,7 @@ const onDocumentKeyDown = (evt) => {
 const openModal = function ({url, likes, comments, description}) {
   modalElement.classList.remove('hidden');
   commentsLoader.classList.remove('hidden');
-  bigPictureImg.src = url;// заменяем стандартную большую фото на фото текущей "маленькой"
+  bigPictureImg.src = url;
   likesCount.textContent = likes;
   totalСomments.textContent = comments.length;
   descriptionOfPhoto.textContent = description;
@@ -40,11 +39,9 @@ const openModal = function ({url, likes, comments, description}) {
 const closeModal = function () {
   clearComments();
   modalElement.classList.add('hidden');
-  //удалить обработчик для закрытия
   document.removeEventListener('keydown', onDocumentKeyDown);
 };
 
-//Закрытие модального окна по клику на крестик
 bigPictureCloseButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   body.classList.remove('modal-open');

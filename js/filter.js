@@ -1,11 +1,9 @@
-import { renderPhotos, removeThumbnails } from './renderThumbnails.js';
+import { renderPhotos, removeThumbnails } from './render-thumbnails.js';
 import { debounce } from './utils.js';
 
 const MAX_RANDOM_PHOTO_COUNT = 10;
 const filterFormElement = document.querySelector('.img-filters__form');
-
 const imgFilters = document.querySelector('.img-filters');
-//форма с фильтрами на главной
 
 const localData = [];
 
@@ -14,7 +12,6 @@ const showImgFilters = (photos) => {
   localData.push(...photos.slice());
 };
 
-//Определяю активную кнопку
 const getActiveButton = (currentButton) => {
   const activeButton = document.querySelector('.img-filters__button--active');
   if (currentButton !== activeButton) {
@@ -23,7 +20,6 @@ const getActiveButton = (currentButton) => {
   currentButton.classList.add('img-filters__button--active');
 };
 
-// Фильтр по рандомным фото
 const makeRandomFilter = (photos, count) => {
   const searchForRandomImages = photos.slice().sort(() => 0.5 - Math.random()).slice(0, count);
   renderPhotos(searchForRandomImages);
