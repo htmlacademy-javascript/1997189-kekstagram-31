@@ -46,7 +46,8 @@ const renderPhoto = ({ url, description, likes }) => {
   modal.querySelector('.likes-count').textContent = likes;
 };
 
-const loaderButtonClickHandler = () => {
+const loaderButtonClickHandler = (evt) => {
+  evt.preventDefault();
   renderComments();
 };
 

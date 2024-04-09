@@ -58,7 +58,6 @@ function closeUploadModal () {
   resetFilter();
   pristineReset();
   form.reset();
-  //Удаляю слушатель с ul - checkbox
   effectsList.removeEventListener('change', updateSlider);
   document.removeEventListener('keydown', onDocumentKeyDown);
   imgUploadBtnCancel.removeEventListener('click', closeUploadModal);

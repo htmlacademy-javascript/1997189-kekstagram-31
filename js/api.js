@@ -20,20 +20,20 @@ const getData = (onSuccess) => {
     })
     .catch(() => {
       showDataErrorMessage();
-      throw new Error(ErrorText.GET_DATA);
+      //throw new Error(ErrorText.GET_DATA);
     });
 };
 
 const sendData = (body) => {
-  fetch(BASE_URL,
+  fetch('https://31.javascript.htmlacademy.pro/kekstagram',//BASE_URL,
     {
       method: 'POST',
       body
     }
   ).then((response) => {
     if (response.ok) {
-      closeUploadModal();
       showSuccessMessage();
+      closeUploadModal();
     } else {
       showErrorMessage();
       throw new Error(ErrorText.SEND_DATA);
@@ -41,7 +41,7 @@ const sendData = (body) => {
   })
     .catch((err) => {
       showErrorMessage(err.message);
-      throw new Error(ErrorText.SEND_DATA);
+      //throw new Error(ErrorText.SEND_DATA);
     })
     .finally(() => {
       unBlockSubmitBtn();

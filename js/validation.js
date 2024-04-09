@@ -27,11 +27,11 @@ const pristine = new Pristine(
 
 const getErrorMessage = () => message;
 const validateHashtags = (hashtagElement) => {
-  const hashtagArr = [...hashtagElement.replace(/\s+/g,' ').trim().split(' ')];
+  const hashtagArr = [...hashtagElement.replace(/\s+/g,' ').trim().toUpperCase().split(' ')];
   const hashtagReg = /^#[a-zа-яё0-9]{1,19}$/i;
   const uniqueArr = [...new Set(hashtagArr)];
 
-  if(!hashtagElement) {
+  if(!hashtagElement || hashtagElement === '') {
     return true;
   } else {
     if(hashtagArr.length > 5) {
@@ -71,6 +71,13 @@ pristine.addValidator(
 );
 
 pristine.validate();
+
+hashtagInput.addEventListener('keydown', (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    evt.stopPropagation();
+  }
+});
 
 commentTextarea.addEventListener('keydown', (evt) => {
   if (isEscapeKey(evt)) {
