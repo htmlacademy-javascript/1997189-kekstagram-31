@@ -14,11 +14,18 @@ const commentsLoader = document.querySelector('.comments-loader');
 
 const body = document.querySelector('body');
 
-const onDocumentKeyDown = (evt) => {
+const closeModal = function () {
+  clearComments();
+  modalElement.classList.add('hidden');
+  document.removeEventListener('keydown', onDocumentKeyDown);
+};
+
+function onDocumentKeyDown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     body.classList.remove('modal-open');
     modalElement.classList.add('hidden');
+    closeModal();
   }
 };
 
@@ -36,11 +43,6 @@ const openModal = function ({url, likes, comments, description}) {
 };
 
 
-const closeModal = function () {
-  clearComments();
-  modalElement.classList.add('hidden');
-  document.removeEventListener('keydown', onDocumentKeyDown);
-};
 
 bigPictureCloseButton.addEventListener('click', (evt) => {
   evt.preventDefault();
