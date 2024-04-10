@@ -25,7 +25,7 @@ const getData = (onSuccess) => {
 };
 
 const sendData = (body) => {
-  fetch('https://31.javascript.htmlacademy.pro/kekstagram',//BASE_URL,
+  fetch(`${BASE_URL}${Route.SEND_DATA}`,
     {
       method: 'POST',
       body
