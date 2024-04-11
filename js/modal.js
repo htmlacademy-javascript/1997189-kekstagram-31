@@ -27,7 +27,7 @@ function onDocumentKeyDown (evt) {
     modalElement.classList.add('hidden');
     closeModal();
   }
-};
+}
 
 const openModal = function ({url, likes, comments, description}) {
   modalElement.classList.remove('hidden');
@@ -41,8 +41,6 @@ const openModal = function ({url, likes, comments, description}) {
   renderComments(comments);
   document.addEventListener('keydown', onDocumentKeyDown);
 };
-
-
 
 bigPictureCloseButton.addEventListener('click', (evt) => {
   evt.preventDefault();
