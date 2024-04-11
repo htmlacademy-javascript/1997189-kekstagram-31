@@ -7,5 +7,3 @@ getData((photos) => {
   renderPhotos(photos);
   showImgFilters(photos);
 });
-
-

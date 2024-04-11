@@ -4,6 +4,7 @@ import { debounce } from './utils.js';
 const MAX_RANDOM_PHOTO_COUNT = 10;
 const filterFormElement = document.querySelector('.img-filters__form');
 const imgFilters = document.querySelector('.img-filters');
+
 const localData = [];
 
 const showImgFilters = (photos) => {
@@ -12,6 +13,7 @@ const showImgFilters = (photos) => {
 };
 
 const getActiveButton = (currentButton) => {
+
   const activeButton = document.querySelector('.img-filters__button--active');
   if (currentButton !== activeButton) {
     activeButton.classList.remove('img-filters__button--active');
@@ -24,9 +26,8 @@ const makeRandomFilter = (photos, count) => {
   renderPhotos(searchForRandomImages);
 };
 
-filterFormElement.addEventListener('click', debounce((evt) => {
+const switchFilters = (evt) => {
   removeThumbnails();
-  getActiveButton(evt.target);
   switch (evt.target.id) {
     case 'filter-default':
       renderPhotos(localData);
@@ -38,7 +39,14 @@ filterFormElement.addEventListener('click', debounce((evt) => {
       findPopularPhotos(localData);
       break;
   }
-}, 500));
+};
+
+const debouncedDoSomething = debounce(switchFilters,500);
+
+filterFormElement.addEventListener('click',(evt) => {
+  getActiveButton(evt.target);
+  debouncedDoSomething(evt);
+});
 
 const sortByQuantityComments = (arr) => {
   arr.sort((element, nextElement) => element.comments < nextElement.comments ? 1 : -1);

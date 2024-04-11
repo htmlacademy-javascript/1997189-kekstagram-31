@@ -8,19 +8,26 @@ const likesCount = modalElement.querySelector('.likes-count');
 const quantityOfVisibleComments = modalElement.querySelector('.social__comment-shown-count');
 const totalСomments = modalElement.querySelector('.social__comment-total-count');
 const descriptionOfPhoto = modalElement.querySelector('.social__caption');
-const commentsContainer = modalElement.querySelector('.social__comments');//ul для вставки комментов li
+const commentsContainer = modalElement.querySelector('.social__comments');
 const commentElement = modalElement.querySelector('.social__comment');
 const commentsLoader = document.querySelector('.comments-loader');
 
 const body = document.querySelector('body');
 
-const onDocumentKeyDown = (evt) => {
+const closeModal = function () {
+  clearComments();
+  modalElement.classList.add('hidden');
+  document.removeEventListener('keydown', onDocumentKeyDown);
+};
+
+function onDocumentKeyDown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     body.classList.remove('modal-open');
     modalElement.classList.add('hidden');
+    closeModal();
   }
-};
+}
 
 const openModal = function ({url, likes, comments, description}) {
   modalElement.classList.remove('hidden');
@@ -33,13 +40,6 @@ const openModal = function ({url, likes, comments, description}) {
   commentsContainer.innerHTML = '';
   renderComments(comments);
   document.addEventListener('keydown', onDocumentKeyDown);
-};
-
-
-const closeModal = function () {
-  clearComments();
-  modalElement.classList.add('hidden');
-  document.removeEventListener('keydown', onDocumentKeyDown);
 };
 
 bigPictureCloseButton.addEventListener('click', (evt) => {
