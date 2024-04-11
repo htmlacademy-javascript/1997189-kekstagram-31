@@ -194,14 +194,12 @@ export const showErrorMessage = () => {
   const errorButtonClose = document.querySelector('.error__button');
   const errorOverlay = document.querySelector('.error');
   errorOverlay.addEventListener ('click',closeErrorOverlay);
-  //удаляю закрытие по escape всего мод окна
   document.removeEventListener('keydown', onDocumentKeyDown);
   errorButtonClose.addEventListener('click', closeErrorMessage);
   document.addEventListener('keydown', onErrorButtonKeyDown);
 };
 
 form.addEventListener('submit', (evt) => {
-  //если не поставить, то форма улетит на сервер
   evt.preventDefault();
   if (
     validate()

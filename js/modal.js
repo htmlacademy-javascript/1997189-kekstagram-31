@@ -8,7 +8,7 @@ const likesCount = modalElement.querySelector('.likes-count');
 const quantityOfVisibleComments = modalElement.querySelector('.social__comment-shown-count');
 const totalСomments = modalElement.querySelector('.social__comment-total-count');
 const descriptionOfPhoto = modalElement.querySelector('.social__caption');
-const commentsContainer = modalElement.querySelector('.social__comments');//ul для вставки комментов li
+const commentsContainer = modalElement.querySelector('.social__comments');
 const commentElement = modalElement.querySelector('.social__comment');
 const commentsLoader = document.querySelector('.comments-loader');
 
